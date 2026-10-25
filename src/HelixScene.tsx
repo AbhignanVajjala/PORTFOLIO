@@ -17,11 +17,14 @@ function strandPoint(
 ): Point {
   const angle = t * Math.PI * 6.2 + phase + (opposite ? Math.PI : 0);
   const radius = Math.min(width * 0.095, height * 0.115);
-  const centerX = width * (0.1 + 0.78 * t);
+  const centerX = width * (0.03 + 0.94 * t);
   const centerY =
-    height * (0.92 - 0.8 * t) + Math.sin(t * Math.PI) * height * 0.035;
-  const normalX = 0.72;
-  const normalY = 0.7;
+    height * (0.88 - 0.67 * t) + Math.sin(t * Math.PI) * height * 0.025;
+  const axisX = width * 0.94;
+  const axisY = -height * 0.67;
+  const axisLength = Math.hypot(axisX, axisY) || 1;
+  const normalX = -axisY / axisLength;
+  const normalY = axisX / axisLength;
   const depth = Math.sin(angle);
   const projectedRadius = radius * Math.cos(angle) * (1 + depth * 0.12);
   return {
@@ -125,6 +128,58 @@ function CircuitField() {
       aria-hidden="true"
       preserveAspectRatio="xMidYMid slice"
     >
+      <g stroke="#76d8d4" opacity=".14" aria-hidden="true">
+        <ellipse
+          cx="867"
+          cy="80"
+          rx="132"
+          ry="121"
+          transform="rotate(-18 867 80)"
+          strokeWidth="2"
+        />
+        <ellipse
+          cx="867"
+          cy="80"
+          rx="117"
+          ry="106"
+          transform="rotate(-18 867 80)"
+          strokeDasharray="3 9"
+        />
+        <ellipse
+          cx="870"
+          cy="74"
+          rx="54"
+          ry="46"
+          transform="rotate(24 870 74)"
+          strokeWidth="2"
+        />
+        <path
+          d="M774 94c14 11 31 10 46 0m101 66c14-5 23-14 30-27"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+        <ellipse
+          cx="91"
+          cy="669"
+          rx="115"
+          ry="105"
+          transform="rotate(18 91 669)"
+          strokeWidth="2"
+        />
+        <ellipse
+          cx="91"
+          cy="669"
+          rx="49"
+          ry="43"
+          transform="rotate(-20 91 669)"
+          strokeWidth="2"
+        />
+        <path
+          d="M140 614c19 3 31 17 30 30M6 630c14-8 28-8 41 0"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+      </g>
       <g stroke="#4fb3bd" strokeWidth="1" opacity=".22">
         <path d="M70 50h190l36 36h128m-342 14h171l27 27h82m-318 19h131l48 48h150m317-140h117l42 42h126m-292-19h91l38 38h112" />
         <path d="M100 666h214l39-39h144m-366-20h148l53-53h83m360 110H598l-39-39h-68m342-27H700l-32-32h-54" />
@@ -162,6 +217,7 @@ export function HelixScene() {
     let target = current;
 
     const paint = () => {
+      if (width < 1 || height < 1) return;
       drawHelix(ctx, width, height, current, mobile);
       canvas.dataset.phase = current.toFixed(3);
     };

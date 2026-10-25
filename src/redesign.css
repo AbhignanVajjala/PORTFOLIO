@@ -946,3 +946,263 @@ body {
     font-size: 13px;
   }
 }
+
+/* Refinement: diagonal living-system imagery and quieter section transitions. */
+.hero-name {
+  font-size: clamp(30px, 2.8vw, 40px);
+  margin-bottom: 25px;
+}
+.hero-scene {
+  transform: rotate(-3deg) scale(1.04);
+  transform-origin: 55% 52%;
+}
+.hero-circuit {
+  opacity: 0.62;
+}
+.projects-section,
+.toolkit-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.projects-section {
+  padding-bottom: 105px;
+  background:
+    radial-gradient(circle at 89% 8%, #164a5347, transparent 30%), #081723;
+}
+.about-section {
+  padding-top: 106px;
+  background: linear-gradient(160deg, #0a1e2a, #081723 64%);
+}
+.toolkit-section {
+  background:
+    radial-gradient(circle at 82% 70%, #17465147, transparent 36%), #081723;
+}
+.projects-section > .wrap,
+.toolkit-section > .wrap {
+  position: relative;
+  z-index: 1;
+}
+.bio-atmosphere {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  color: #71d2d0;
+}
+.bio-atmosphere-cell {
+  width: min(38vw, 490px);
+  right: -110px;
+  top: 50px;
+  opacity: 0.13;
+  transform: rotate(14deg);
+}
+.bio-atmosphere-molecular {
+  width: min(43vw, 550px);
+  left: -170px;
+  bottom: -150px;
+  opacity: 0.11;
+  transform: rotate(-15deg);
+}
+.project-card {
+  transform: translateY(0) scale(1);
+  transform-origin: center;
+  transition:
+    transform 0.38s cubic-bezier(0.2, 0.72, 0.2, 1),
+    box-shadow 0.38s ease,
+    border-color 0.38s ease;
+}
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-9px) scale(1.012);
+  border-color: #6aadb0;
+  box-shadow:
+    0 36px 80px #020d1880,
+    0 0 38px #4cc3bd13;
+}
+.project-card.project-violet:hover,
+.project-card.project-violet:focus-within {
+  border-color: #9597d5;
+  box-shadow:
+    0 36px 80px #020d1880,
+    0 0 38px #9c9ae31a;
+}
+.project-graphic,
+.project-graphic svg {
+  transition:
+    transform 0.44s cubic-bezier(0.2, 0.72, 0.2, 1),
+    filter 0.44s ease,
+    background 0.44s ease;
+}
+.project-card:hover .project-graphic svg,
+.project-card:focus-within .project-graphic svg {
+  transform: scale(1.045) translateY(-3px);
+  filter: drop-shadow(0 0 12px #55cfc04d);
+}
+.project-violet:hover .project-graphic svg,
+.project-violet:focus-within .project-graphic svg {
+  filter: drop-shadow(0 0 12px #a4a6e54d);
+}
+.project-card:hover .button-primary,
+.project-card:focus-within .button-primary {
+  background: #a4f4e8;
+}
+.project-card:hover .button-outline,
+.project-card:focus-within .button-outline {
+  border-color: #85c7c2;
+}
+.toolkit-row {
+  grid-template-columns: 38px 196px 1fr 20px;
+  padding-inline: 8px;
+  transition:
+    background 0.28s ease,
+    padding-left 0.28s ease,
+    box-shadow 0.28s ease;
+}
+.toolkit-row:hover {
+  padding-left: 17px;
+  background: linear-gradient(90deg, #2b67674a, #143b4540 65%, transparent);
+  box-shadow: inset 3px 0 #75d7d0;
+}
+.toolkit-row::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  justify-self: center;
+  border: 1px solid #75c8c7;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 2px #102f3a,
+    0 0 0 3px #4a9d9c26;
+  opacity: 0.65;
+  transition:
+    opacity 0.28s ease,
+    box-shadow 0.28s ease;
+}
+.toolkit-row:hover::after {
+  opacity: 1;
+  box-shadow:
+    inset 0 0 0 2px #102f3a,
+    0 0 0 5px #4a9d9c33;
+}
+.rosalind-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 89% 8%, #24696888, transparent 38%), #102b38;
+}
+.rosalind-card > :not(.rosalind-motif) {
+  position: relative;
+  z-index: 1;
+}
+.rosalind-motif {
+  position: absolute;
+  width: 155px;
+  top: -15px;
+  right: 4px;
+  color: #89ddd5;
+  opacity: 0.22;
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+.timeline-item {
+  transition:
+    background 0.26s ease,
+    box-shadow 0.26s ease;
+}
+.timeline-item:hover {
+  background: linear-gradient(90deg, #1b4d5440, transparent 72%);
+  box-shadow: inset 2px 0 #72cfc744;
+}
+.contact-orbit {
+  width: 455px;
+  height: 390px;
+  border-radius: 54% 46% 57% 43% / 46% 54% 43% 57%;
+  background: radial-gradient(ellipse at 56% 49%, #59aaa819, transparent 67%);
+  transform: translateY(-50%) rotate(-18deg);
+}
+.contact-orbit::before {
+  border-radius: 48% 52% 57% 43% / 56% 44% 51% 49%;
+  transform: rotate(13deg);
+}
+.contact-orbit::after {
+  inset: 117px 139px 108px 125px;
+  border-radius: 55% 45% 51% 49% / 48% 57% 43% 52%;
+  transform: rotate(28deg);
+  background: radial-gradient(ellipse, #6bbdbb19, transparent 75%);
+}
+@media (max-width: 1100px) {
+  .toolkit-row {
+    grid-template-columns: 30px 150px 1fr 18px;
+  }
+}
+@media (max-width: 850px) {
+  .bio-atmosphere-cell {
+    width: 420px;
+    right: -180px;
+    top: 80px;
+  }
+  .bio-atmosphere-molecular {
+    width: 390px;
+    left: -200px;
+  }
+  .hero-scene {
+    transform: rotate(-3deg) scale(1.07);
+  }
+  .toolkit-row {
+    grid-template-columns: 36px 190px 1fr 18px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-name {
+    font-size: 29px;
+    margin-bottom: 23px;
+  }
+  .hero-scene {
+    transform: rotate(-4deg) scale(1.08);
+  }
+  .projects-section {
+    padding-bottom: 85px;
+  }
+  .about-section {
+    padding-top: 84px;
+  }
+  .bio-atmosphere-cell {
+    width: 360px;
+    right: -215px;
+    top: 0;
+    opacity: 0.1;
+  }
+  .bio-atmosphere-molecular {
+    width: 340px;
+    opacity: 0.08;
+  }
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-4px) scale(1.004);
+  }
+  .project-card:hover .project-graphic svg,
+  .project-card:focus-within .project-graphic svg {
+    transform: scale(1.025);
+  }
+  .toolkit-row {
+    grid-template-columns: 28px 1fr 18px;
+  }
+  .rosalind-motif {
+    width: 130px;
+    opacity: 0.15;
+  }
+  .contact-orbit {
+    right: -225px;
+    opacity: 0.38;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-graphic,
+  .project-graphic svg,
+  .toolkit-row,
+  .toolkit-row::after,
+  .timeline-item {
+    transition: none;
+  }
+}

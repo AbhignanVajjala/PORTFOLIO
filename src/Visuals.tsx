@@ -172,6 +172,84 @@ export function FluxVisual({ small = false }: { small?: boolean }) {
   );
 }
 
+export function BioAtmosphere({ kind }: { kind: "cell" | "molecular" }) {
+  return (
+    <svg
+      className={`bio-atmosphere bio-atmosphere-${kind}`}
+      viewBox="0 0 520 520"
+      fill="none"
+      aria-hidden="true"
+    >
+      {kind === "cell" ? (
+        <>
+          <path
+            d="M258 32C367 27 476 115 488 239c13 135-82 246-214 253C139 499 38 411 31 279 23 146 121 37 258 32Z"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M259 49c108-2 202 86 209 194 9 120-78 221-197 231C152 483 55 398 49 278 43 158 132 52 259 49Z"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeDasharray="4 12"
+          />
+          <ellipse
+            cx="278"
+            cy="250"
+            rx="95"
+            ry="88"
+            transform="rotate(-21 278 250)"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <ellipse
+            cx="278"
+            cy="250"
+            rx="67"
+            ry="61"
+            transform="rotate(-21 278 250)"
+            stroke="currentColor"
+            opacity=".5"
+          />
+          <path
+            d="M104 209c19-32 57-36 83-5 18 24 13 61-21 76-33 15-68-7-70-36m283 32c23-27 60-22 76 8 13 27-5 54-35 61-27 7-51-11-53-34"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <circle cx="139" cy="232" r="7" fill="currentColor" opacity=".35" />
+          <circle cx="413" cy="305" r="6" fill="currentColor" opacity=".35" />
+        </>
+      ) : (
+        <>
+          <g stroke="currentColor" strokeWidth="1.5">
+            <path d="M48 276 137 147l118 75 103-138 104 106M137 147l-15 190 133-115 110 166 97-198M122 337l137 114 106-63M255 222l204 93M358 84l7 304" />
+            <circle cx="48" cy="276" r="16" />
+            <circle cx="137" cy="147" r="22" />
+            <circle cx="255" cy="222" r="28" />
+            <circle cx="358" cy="84" r="18" />
+            <circle cx="462" cy="190" r="20" />
+            <circle cx="122" cy="337" r="17" />
+            <circle cx="365" cy="388" r="25" />
+            <circle cx="259" cy="451" r="14" />
+            <circle cx="459" cy="315" r="16" />
+          </g>
+          <g fill="currentColor" opacity=".65">
+            <circle cx="48" cy="276" r="4" />
+            <circle cx="137" cy="147" r="5" />
+            <circle cx="255" cy="222" r="6" />
+            <circle cx="358" cy="84" r="4" />
+            <circle cx="462" cy="190" r="4" />
+            <circle cx="122" cy="337" r="4" />
+            <circle cx="365" cy="388" r="5" />
+            <circle cx="259" cy="451" r="4" />
+            <circle cx="459" cy="315" r="4" />
+          </g>
+        </>
+      )}
+    </svg>
+  );
+}
+
 export function SectionHeading({
   eyebrow,
   title,

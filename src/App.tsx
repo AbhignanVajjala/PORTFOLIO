@@ -24,7 +24,6 @@ import {
   Github,
   Linkedin,
   Menu,
-  Microscope,
   Network,
   Orbit,
   X,
@@ -39,7 +38,13 @@ import {
   type Conference,
   type Project,
 } from "./data";
-import { FluxVisual, ProteinVisual, Reveal, SectionHeading } from "./Visuals";
+import {
+  BioAtmosphere,
+  FluxVisual,
+  ProteinVisual,
+  Reveal,
+  SectionHeading,
+} from "./Visuals";
 import { HelixScene } from "./HelixScene";
 
 const externalProps = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -205,32 +210,34 @@ function ProjectLinks({
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Reveal className={`project-card project-${project.accent}`}>
-      <div className="project-card-content">
-        <div className="project-topline">
-          <span>PROJECT / {project.index}</span>
-          <span>
-            <CircleDot size={13} />{" "}
-            {project.accent === "teal"
-              ? "STRUCTURAL SYSTEMS"
-              : "METABOLIC SYSTEMS"}
-          </span>
+    <Reveal className="project-reveal">
+      <article className={`project-card project-${project.accent}`}>
+        <div className="project-card-content">
+          <div className="project-topline">
+            <span>PROJECT / {project.index}</span>
+            <span>
+              <CircleDot size={13} />{" "}
+              {project.accent === "teal"
+                ? "STRUCTURAL SYSTEMS"
+                : "METABOLIC SYSTEMS"}
+            </span>
+          </div>
+          <div>
+            <span className="tag">{project.category}</span>
+            <h3>
+              {project.name}
+              <span>.</span>
+            </h3>
+            <p className="project-short">{project.short}</p>
+          </div>
+          <div className="project-card-bottom">
+            <ProjectLinks project={project} />
+          </div>
         </div>
-        <div>
-          <span className="tag">{project.category}</span>
-          <h3>
-            {project.name}
-            <span>.</span>
-          </h3>
-          <p className="project-short">{project.short}</p>
+        <div className="project-graphic">
+          {project.id === "exo-target" ? <ProteinVisual /> : <FluxVisual />}
         </div>
-        <div className="project-card-bottom">
-          <ProjectLinks project={project} />
-        </div>
-      </div>
-      <div className="project-graphic">
-        {project.id === "exo-target" ? <ProteinVisual /> : <FluxVisual />}
-      </div>
+      </article>
     </Reveal>
   );
 }
@@ -241,9 +248,6 @@ function Hero() {
       <HelixScene />
       <div className="wrap hero-layout">
         <div className="hero-copy">
-          <div className="hero-kicker">
-            <span className="signal-dot" /> RESEARCHER &amp; BUILDER
-          </div>
           <h1 className="hero-name">Abhignan Vajjala</h1>
           <h2>
             Exploring <em>biological systems</em> through computation
@@ -277,64 +281,6 @@ function Hero() {
               <span>Hyderabad, India</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ResearchBuild() {
-  const stages = [
-    {
-      n: "01",
-      icon: <Microscope size={25} strokeWidth={1.5} />,
-      title: "Investigate",
-      text: "Identify biologically relevant questions, evaluate scientific literature, and examine biological datasets.",
-    },
-    {
-      n: "02",
-      icon: <Orbit size={25} strokeWidth={1.5} />,
-      title: "Model",
-      text: "Apply structural prediction and mathematical modeling to investigate biological behavior.",
-    },
-    {
-      n: "03",
-      icon: <Code2 size={25} strokeWidth={1.5} />,
-      title: "Build",
-      text: "Develop analysis workflows and interactive tools that make scientific results accessible.",
-    },
-  ];
-  return (
-    <section className="section process-section" id="approach">
-      <div className="wrap">
-        <SectionHeading
-          eyebrow="THE APPROACH"
-          title="From question to interface."
-          intro="Research and development are two parts of the same process: understand the system, then build tools to explore it."
-        />
-        <div className="process-grid">
-          {stages.map((s, i) => (
-            <Reveal
-              className="process-step"
-              key={s.n}
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <div className="process-step-top">
-                <span>{s.n} / 03</span>
-                {s.icon}
-              </div>
-              <h3>
-                {s.title}
-                <span>.</span>
-              </h3>
-              <p>{s.text}</p>
-              {i < 2 && (
-                <span className="process-arrow">
-                  <ArrowRight size={18} />
-                </span>
-              )}
-            </Reveal>
-          ))}
         </div>
       </div>
     </section>
@@ -456,6 +402,7 @@ function Research() {
 function Toolkit() {
   return (
     <section className="section toolkit-section" id="toolkit">
+      <BioAtmosphere kind="molecular" />
       <div className="wrap">
         <SectionHeading
           eyebrow="TOOLS & METHODS"
@@ -468,11 +415,30 @@ function Toolkit() {
                 <span className="toolkit-num">0{i + 1}</span>
                 <h3>{item.category}</h3>
                 <p>{item.items}</p>
-                <ArrowUpRight size={16} />
               </Reveal>
             ))}
           </div>
           <Reveal className="rosalind-card">
+            <svg
+              className="rosalind-motif"
+              viewBox="0 0 150 130"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M25 15c88 25 9 70 100 100M125 15C37 40 116 90 25 115"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M53 25h44M66 42h18M59 60h32M67 78h18M52 96h46"
+                stroke="currentColor"
+                strokeWidth="1"
+                opacity=".6"
+              />
+              <circle cx="53" cy="25" r="3" fill="currentColor" />
+              <circle cx="98" cy="96" r="3" fill="currentColor" />
+            </svg>
             <div className="rosalind-top">
               <BookOpen size={25} strokeWidth={1.4} />
               <span>PRACTICE / BIOINFORMATICS</span>
@@ -565,6 +531,7 @@ export function Home() {
     <main id="main-content">
       <Hero />
       <section className="section projects-section" id="projects">
+        <BioAtmosphere kind="cell" />
         <div className="wrap">
           <SectionHeading
             eyebrow="SELECTED WORK"
@@ -578,7 +545,6 @@ export function Home() {
           </div>
         </div>
       </section>
-      <ResearchBuild />
       <About />
       <Research />
       <Toolkit />
