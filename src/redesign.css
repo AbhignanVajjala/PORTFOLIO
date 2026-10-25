@@ -1206,3 +1206,222 @@ body {
     transition: none;
   }
 }
+
+
+/* Centered hero and contact: explicit layout fix */
+/* The helix spans the hero as an atmospheric background, never as a right column. */
+.hero {
+  min-height: 0;
+}
+.hero:before {
+  background: radial-gradient(
+    ellipse 72% 82% at 50% 48%,
+    rgba(7, 21, 34, 0.76) 0%,
+    rgba(7, 21, 34, 0.61) 45%,
+    rgba(7, 21, 34, 0.27) 85%,
+    rgba(7, 21, 34, 0.1) 100%
+  );
+}
+.hero-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: max(820px, calc(100svh - 84px));
+  padding-block: 105px;
+  text-align: center;
+}
+.hero-copy {
+  width: min(100%, 900px);
+  max-width: 900px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.hero-name {
+  font-size: clamp(32px, 3vw, 44px);
+  margin-bottom: 25px;
+}
+.hero h2 {
+  max-width: 900px;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+.hero-descriptor {
+  max-width: 780px;
+  margin-inline: auto;
+}
+.hero-intro {
+  max-width: 740px;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+.hero-actions {
+  justify-content: center;
+}
+.hero-affiliation {
+  justify-content: center;
+  margin-top: 42px;
+  text-align: center;
+}
+.hero-affiliation .affiliation-bar {
+  display: none;
+}
+.hero-affiliation div {
+  align-items: center;
+  text-align: center;
+}
+.hero-scene {
+  inset: 0;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  transform-origin: center;
+  opacity: 0.54;
+  mask-image: none;
+  pointer-events: none;
+}
+.hero-circuit {
+  opacity: 0.38;
+}
+
+/* The complete contact block (label, heading, copy, email and social links)
+   shares one center axis; the orbital motif is background-only. */
+.contact-inner {
+  justify-content: center;
+  text-align: center;
+}
+.contact-content {
+  margin-inline: auto;
+  width: min(100%, 890px);
+  max-width: 890px;
+  padding: 96px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.contact-content .eyebrow {
+  justify-content: center;
+}
+.contact-content h2,
+.contact-content p {
+  margin-inline: auto;
+}
+.contact-content p {
+  max-width: 680px;
+}
+.contact-email {
+  max-width: 100%;
+  justify-content: center;
+  overflow-wrap: anywhere;
+}
+.contact-socials {
+  justify-content: center;
+}
+.contact-orbit {
+  left: 50%;
+  right: auto;
+  opacity: 0.18;
+  transform: translate(-50%, -50%) rotate(-18deg);
+}
+
+@media (max-width: 850px) {
+  .hero-layout {
+    min-height: 0;
+    padding-block: 90px;
+    align-items: center;
+  }
+  .hero-copy {
+    width: 100%;
+  }
+  .hero-scene {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.34;
+    transform: none;
+    mask-image: none;
+  }
+  .hero:before {
+    background: rgba(7, 21, 34, 0.6);
+  }
+  .contact-orbit {
+    left: 50%;
+    right: auto;
+    opacity: 0.13;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-layout {
+    min-height: 0;
+    padding-block: 76px 84px;
+  }
+  .hero-name {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+  .hero h2 {
+    font-size: clamp(36px, 9vw, 51px);
+    line-height: 1.18;
+    letter-spacing: -1.6px;
+  }
+  .hero-descriptor {
+    max-width: 100%;
+    font-size: 14px;
+  }
+  .hero-intro {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.68;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-affiliation {
+    justify-content: center;
+    margin-top: 34px;
+  }
+  .hero-affiliation div {
+    align-items: center;
+  }
+  .hero-scene {
+    opacity: 0.25;
+  }
+  .contact-inner {
+    min-height: 0;
+    justify-content: center;
+  }
+  .contact-content {
+    padding: 85px 0;
+  }
+  .contact-content p {
+    max-width: 100%;
+  }
+  .contact-email {
+    font-size: clamp(16px, 4.4vw, 22px);
+    gap: 8px;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  .contact-socials {
+    justify-content: center;
+    gap: 18px;
+  }
+  .contact-orbit {
+    left: 50%;
+    right: auto;
+    opacity: 0.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scene {
+    transition: none;
+  }
+}
