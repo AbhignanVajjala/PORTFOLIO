@@ -82,7 +82,7 @@ export const projects: Project[] = [
       "Candidate interactions require biological and experimental follow-up.",
     ],
     sourceUrl: "https://github.com/AbhignanVajjala/TNBC-PROJECT",
-    demoUrl: null,
+    demoUrl: "https://tnbc-project-iota.vercel.app/",
   },
   {
     id: "fluxnova",

@@ -8,7 +8,6 @@ import {
   useParams,
 } from "react-router-dom";
 import {
-  ArrowDown,
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
@@ -40,13 +39,8 @@ import {
   type Conference,
   type Project,
 } from "./data";
-import {
-  FluxVisual,
-  HelixVisual,
-  ProteinVisual,
-  Reveal,
-  SectionHeading,
-} from "./Visuals";
+import { FluxVisual, ProteinVisual, Reveal, SectionHeading } from "./Visuals";
+import { HelixScene } from "./HelixScene";
 
 const externalProps = { target: "_blank", rel: "noopener noreferrer" } as const;
 
@@ -83,14 +77,11 @@ function Header() {
       </a>
       <div className="header-inner wrap">
         <Link to="/#home" className="brand" aria-label="Abhignan Vajjala, home">
-          <span className="brand-icon">
-            <Dna size={20} strokeWidth={1.7} />
-          </span>
-          <span>
-            AV<span className="brand-period">.</span>
-          </span>
+          <span className="brand-mark">AV</span>
           <span className="brand-divider" />
-          <span className="brand-descriptor">RESEARCHER + BUILDER</span>
+          <span className="brand-descriptor">
+            COMPUTATIONAL BIOLOGY &amp; RESEARCH
+          </span>
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {nav.map(([label, url]) => (
@@ -177,7 +168,6 @@ function Footer() {
             ROSALIND <ArrowUpRight size={12} />
           </a>
         </div>
-        <span>BUILT AT THE INTERSECTION OF BIOLOGY + CODE</span>
       </div>
     </footer>
   );
@@ -197,7 +187,7 @@ function ProjectLinks({
           Explore Project <ArrowUpRight size={16} />
         </Link>
       )}
-      {project.demoUrl ? (
+      {project.demoUrl && (
         <a
           className={`button ${detail ? "button-primary" : "button-outline"}`}
           href={project.demoUrl}
@@ -205,10 +195,6 @@ function ProjectLinks({
         >
           Launch Interactive Demo <ExternalLink size={15} />
         </a>
-      ) : (
-        <div className="coming-soon">
-          <span className="status-pulse" /> Interactive Demo — Coming Soon
-        </div>
       )}
       <a className="text-link" href={project.sourceUrl} {...externalProps}>
         View Source <ArrowUpRight size={15} />
@@ -252,22 +238,16 @@ function ProjectCard({ project }: { project: Project }) {
 function Hero() {
   return (
     <section className="hero" id="home">
-      <div className="hero-noise" />
+      <HelixScene />
       <div className="wrap hero-layout">
         <div className="hero-copy">
           <div className="hero-kicker">
-            <span className="signal-dot" /> PORTFOLIO / RESEARCH & DEVELOPMENT{" "}
-            <span className="hero-kicker-line" />
+            <span className="signal-dot" /> RESEARCHER &amp; BUILDER
           </div>
-          <h1 className="hero-name">
-            ABHIGNAN VAJJALA <span>— BIOTECHNOLOGY UNDERGRADUATE</span>
-          </h1>
+          <h1 className="hero-name">Abhignan Vajjala</h1>
           <h2>
-            Exploring
-            <br />
-            <em>biological systems</em>
-            <br />
-            through computation<span className="heading-period">.</span>
+            Exploring <em>biological systems</em> through computation
+            <span className="heading-period">.</span>
           </h2>
           <p className="hero-descriptor">{person.descriptor}</p>
           <p className="hero-intro">{person.intro}</p>
@@ -298,22 +278,6 @@ function Hero() {
             </div>
           </div>
         </div>
-        <div className="hero-art">
-          <HelixVisual />
-          <div className="hero-art-caption">
-            <span>
-              <span className="little-square" /> BIOLOGICAL STRUCTURE
-            </span>
-            <span>→</span>
-            <span>COMPUTATIONAL INSIGHT</span>
-          </div>
-        </div>
-      </div>
-      <div className="wrap hero-bottom">
-        <span>
-          SCROLL TO EXPLORE <ArrowDown size={13} />
-        </span>
-        <span>01 / RESEARCHER + BUILDER</span>
       </div>
     </section>
   );
@@ -394,7 +358,6 @@ function About() {
           <SectionHeading
             eyebrow="THE PERSON BEHIND THE WORK"
             title="Curiosity, made computational."
-            index="02"
           />
           <Reveal className="about-copy">
             <h3>About Me</h3>
@@ -426,19 +389,17 @@ function About() {
                 <div className="interest-row" key={interest}>
                   <Icon size={17} strokeWidth={1.5} />
                   <span>{interest}</span>
-                  <span className="interest-number">0{i + 1}</span>
                 </div>
               );
             })}
           </div>
-          <div className="panel-foot">BIOLOGY / COMPUTATION / SOFTWARE</div>
         </Reveal>
       </div>
     </section>
   );
 }
 
-function ConferenceEntry({ entry, i }: { entry: Conference; i: number }) {
+function ConferenceEntry({ entry }: { entry: Conference }) {
   return (
     <Reveal className="timeline-item">
       <div className="timeline-axis">
@@ -469,7 +430,6 @@ function ConferenceEntry({ entry, i }: { entry: Conference; i: number }) {
           </a>
         )}
       </div>
-      <span className="timeline-count">0{i + 1}</span>
     </Reveal>
   );
 }
@@ -482,11 +442,10 @@ function Research() {
           eyebrow="RESEARCH JOURNEY"
           title="Conversations beyond the lab."
           intro="Participation, presentations, and academic recognition along the way."
-          index="03"
         />
         <div className="timeline">
-          {conferences.map((entry, i) => (
-            <ConferenceEntry entry={entry} i={i} key={entry.title} />
+          {conferences.map((entry) => (
+            <ConferenceEntry entry={entry} key={entry.title} />
           ))}
         </div>
       </div>
@@ -501,7 +460,6 @@ function Toolkit() {
         <SectionHeading
           eyebrow="TOOLS & METHODS"
           title="A practical scientific toolkit."
-          index="04"
         />
         <div className="toolkit-layout">
           <div className="toolkit-list">
@@ -606,22 +564,12 @@ export function Home() {
   return (
     <main id="main-content">
       <Hero />
-      <div className="marquee-line" aria-hidden="true">
-        <span>STRUCTURAL BIOINFORMATICS</span>
-        <i />
-        <span>SYSTEMS BIOLOGY</span>
-        <i />
-        <span>RESEARCH SOFTWARE</span>
-        <i />
-        <span>COMPUTATIONAL CANCER BIOLOGY</span>
-      </div>
       <section className="section projects-section" id="projects">
         <div className="wrap">
           <SectionHeading
             eyebrow="SELECTED WORK"
             title="Research in motion."
             intro="Computational investigations shaped into workflows and interactive tools."
-            index="01"
           />
           <div className="project-list">
             {projects.map((p) => (
@@ -804,7 +752,7 @@ export function ProjectDetail() {
                 </span>
                 <ArrowUpRight size={18} />
               </a>
-              {project.demoUrl ? (
+              {project.demoUrl && (
                 <a href={project.demoUrl} {...externalProps}>
                   <ExternalLink size={20} />
                   <span>
@@ -813,14 +761,6 @@ export function ProjectDetail() {
                   </span>
                   <ArrowUpRight size={18} />
                 </a>
-              ) : (
-                <div className="resource-unavailable">
-                  <ExternalLink size={20} />
-                  <span>
-                    <strong>Interactive Demo — Coming Soon</strong>
-                    <small>Deployment URL will be added when available</small>
-                  </span>
-                </div>
               )}
             </div>
           </section>

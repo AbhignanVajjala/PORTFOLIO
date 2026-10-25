@@ -28,8 +28,8 @@ No environment variables or backend services are required.
 
 ## Update content
 
-All personal links, projects, conference statuses, research interests, and toolkit entries are in `src/data.ts`. Add the future EXO-TARGET frontend URL by changing its `demoUrl: null` to the deployed HTTPS URL. The “Interactive Demo — Coming Soon” notice then automatically becomes a “Launch Interactive Demo” link on the project card and detail page.
+All personal links, projects, conference statuses, research interests, and toolkit entries are in `src/data.ts`. Both project demo URLs are configured there; update either URL if its deployment address changes.
 
-`src/App.tsx` contains the reusable sections, cards, navigation, and project routes. `src/Visuals.tsx` contains original illustrative scientific SVGs. `src/style.css` contains the visual system and responsive rules. `public/` contains the favicon and social preview image.
+`src/App.tsx` contains the reusable sections, cards, navigation, and project routes. `src/HelixScene.tsx` draws the scroll-responsive DNA scene; `src/Visuals.tsx` contains the project illustrations. `src/style.css` and `src/redesign.css` contain the responsive visual system. `public/` contains the favicon and social preview image.
 
 Scientific graphics are illustrative and do not represent measured data. Project findings and conference status labels should be updated only when supported by research records.

@@ -64,7 +64,7 @@ a:focus-visible {
   gap: 10px;
   white-space: nowrap;
   font:
-    700 25px "Space Grotesk",
+    700 25px "Manrope Variable",
     sans-serif;
   letter-spacing: -1px;
 }
@@ -194,7 +194,7 @@ a:focus-visible {
 }
 .section-heading h2 {
   font:
-    600 clamp(39px, 5vw, 70px)/1.08 "Space Grotesk",
+    600 clamp(39px, 5vw, 70px)/1.08 "Manrope Variable",
     sans-serif;
   letter-spacing: -3.7px;
   margin: 23px 0 14px;
@@ -338,7 +338,7 @@ a:focus-visible {
 }
 .hero h2 {
   font:
-    600 clamp(49px, 5.2vw, 77px)/1.07 "Space Grotesk",
+    600 clamp(49px, 5.2vw, 77px)/1.07 "Manrope Variable",
     sans-serif;
   letter-spacing: -4.3px;
   margin: 0;
@@ -394,151 +394,6 @@ a:focus-visible {
   font-size: 12px;
   color: #d3e3e3;
   font-weight: 600;
-}
-.hero-art {
-  justify-self: stretch;
-  align-self: center;
-}
-.helix-shell {
-  height: 540px;
-  position: relative;
-  border: 1px solid #314c59;
-  background: radial-gradient(
-    circle at 50% 46%,
-    #1b424a60,
-    #0b1928 65%,
-    #0b1622
-  );
-  box-shadow:
-    inset 0 0 60px #23637614,
-    0 26px 80px #0003;
-  overflow: hidden;
-}
-.helix-shell:before,
-.helix-shell:after {
-  content: "";
-  position: absolute;
-  border: 1px solid #46728255;
-  border-radius: 50%;
-  width: 350px;
-  height: 350px;
-  left: 50%;
-  top: 49%;
-  transform: translate(-50%, -50%);
-}
-.helix-shell:after {
-  width: 480px;
-  height: 480px;
-  opacity: 0.45;
-}
-.helix-grid {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 49.9%, #59a7b11c 50%, transparent 50.1%),
-    linear-gradient(transparent 49.9%, #59a7b11c 50%, transparent 50.1%);
-  background-size: 60px 60px;
-}
-.helix-svg {
-  position: absolute;
-  height: 92%;
-  width: 80%;
-  left: 10%;
-  top: 4%;
-  filter: drop-shadow(0 0 11px #47caba4d);
-  animation: float 7s ease-in-out infinite;
-}
-.helix-corner {
-  position: absolute;
-  color: #749aa3;
-  font-size: 9px;
-  letter-spacing: 1.2px;
-  z-index: 2;
-}
-.top-left {
-  left: 21px;
-  top: 20px;
-}
-.top-right {
-  right: 20px;
-  top: 20px;
-}
-.bottom-left {
-  left: 21px;
-  bottom: 20px;
-}
-.bottom-right {
-  right: 20px;
-  bottom: 20px;
-}
-.helix-data {
-  position: absolute;
-  color: #60acb3;
-  font-size: 9px;
-  letter-spacing: 2px;
-  opacity: 0.6;
-  writing-mode: vertical-rl;
-}
-.data-one {
-  left: 22px;
-  top: 39%;
-}
-.data-two {
-  right: 22px;
-  top: 41%;
-}
-.hero-art-caption {
-  display: flex;
-  justify-content: space-between;
-  color: #7b9fa7;
-  font-size: 9px;
-  letter-spacing: 1px;
-  padding-top: 17px;
-}
-.little-square {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  background: #83ebdc;
-  margin-right: 5px;
-}
-.hero-bottom {
-  position: relative;
-  border-top: 1px solid #27404a;
-  display: flex;
-  justify-content: space-between;
-  padding: 18px 0 20px;
-  color: #718c99;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-}
-.hero-bottom span:first-child {
-  display: flex;
-  gap: 11px;
-  align-items: center;
-}
-.marquee-line {
-  min-height: 73px;
-  border-top: 1px solid #1d303c;
-  border-bottom: 1px solid #1d303c;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 20px;
-  padding: 10px 4%;
-  background: #0b1520;
-  color: #7d9ba6;
-  font-size: 10px;
-  letter-spacing: 1.2px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.marquee-line i {
-  width: 4px;
-  height: 4px;
-  background: #75dcd5;
-  border-radius: 50%;
-  flex: none;
 }
 .projects-section {
   position: relative;
@@ -598,7 +453,7 @@ a:focus-visible {
 }
 .project-card h3 {
   font:
-    600 clamp(42px, 4vw, 62px)/1 "Space Grotesk",
+    600 clamp(42px, 4vw, 62px)/1 "Manrope Variable",
     sans-serif;
   letter-spacing: -3px;
   margin: 18px 0 14px;
@@ -739,7 +594,7 @@ a:focus-visible {
 }
 .process-step h3 {
   font:
-    500 30px "Space Grotesk",
+    500 30px "Manrope Variable",
     sans-serif;
   letter-spacing: -1px;
   margin: 39px 0 9px;
@@ -783,7 +638,7 @@ a:focus-visible {
 }
 .about-copy h3 {
   font:
-    600 24px "Space Grotesk",
+    600 24px "Manrope Variable",
     sans-serif;
   margin: 0 0 21px;
 }
@@ -896,7 +751,7 @@ a:focus-visible {
 }
 .timeline-body h3 {
   font:
-    500 19px/1.4 "Space Grotesk",
+    500 19px/1.4 "Manrope Variable",
     sans-serif;
   margin: 0 0 7px;
   max-width: 670px;
@@ -973,7 +828,7 @@ a:focus-visible {
 }
 .toolkit-row h3 {
   font:
-    500 16px "Space Grotesk",
+    500 16px "Manrope Variable",
     sans-serif;
   margin: 0;
 }
@@ -1002,7 +857,7 @@ a:focus-visible {
 }
 .rosalind-card h3 {
   font:
-    500 30px/1.22 "Space Grotesk",
+    500 30px/1.22 "Manrope Variable",
     sans-serif;
   letter-spacing: -1px;
   max-width: 320px;
@@ -1091,7 +946,7 @@ a:focus-visible {
 }
 .contact-content h2 {
   font:
-    600 clamp(55px, 7vw, 96px)/1.05 "Space Grotesk",
+    600 clamp(55px, 7vw, 96px)/1.05 "Manrope Variable",
     sans-serif;
   letter-spacing: -5px;
   margin: 21px 0;
@@ -1108,7 +963,7 @@ a:focus-visible {
   align-items: center;
   gap: 23px;
   font:
-    500 clamp(18px, 2.4vw, 28px) "Space Grotesk",
+    500 clamp(18px, 2.4vw, 28px) "Manrope Variable",
     sans-serif;
   color: #a2f1e5;
   border-bottom: 1px solid #6cc5bc;
@@ -1145,7 +1000,7 @@ a:focus-visible {
 }
 .footer-name {
   font:
-    600 24px "Space Grotesk",
+    600 24px "Manrope Variable",
     sans-serif;
 }
 .footer-main p {
@@ -1232,7 +1087,7 @@ a:focus-visible {
 }
 .detail-hero h1 {
   font:
-    600 clamp(56px, 7vw, 103px)/1 "Space Grotesk",
+    600 clamp(56px, 7vw, 103px)/1 "Manrope Variable",
     sans-serif;
   letter-spacing: -6px;
   margin: 19px 0 12px;
@@ -1317,7 +1172,7 @@ a:focus-visible {
 }
 .detail-sections h2 {
   font:
-    500 clamp(27px, 3vw, 40px) "Space Grotesk",
+    500 clamp(27px, 3vw, 40px) "Manrope Variable",
     sans-serif;
   letter-spacing: -1.3px;
   margin: 19px 0 19px;
@@ -1330,7 +1185,7 @@ a:focus-visible {
 }
 .detail-sections .big-statement {
   font:
-    400 clamp(21px, 2.4vw, 28px)/1.5 "Space Grotesk",
+    400 clamp(21px, 2.4vw, 28px)/1.5 "Manrope Variable",
     sans-serif;
   color: #dceceb;
   max-width: 750px;
@@ -1456,7 +1311,7 @@ a:focus-visible {
 }
 .next-project > a {
   font:
-    600 30px "Space Grotesk",
+    600 30px "Manrope Variable",
     sans-serif;
   display: flex;
   gap: 15px;
@@ -1474,14 +1329,9 @@ a:focus-visible {
 }
 .not-found h1 {
   font:
-    600 62px "Space Grotesk",
+    600 62px "Manrope Variable",
     sans-serif;
   letter-spacing: -3px;
-}
-@keyframes float {
-  50% {
-    transform: translateY(-12px);
-  }
 }
 @media (max-width: 1100px) {
   .desktop-nav {

@@ -1,112 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { CSSProperties } from "react";
 
-const rungs = Array.from({ length: 19 }, (_, i) => {
-  const y = 32 + i * 23;
-  const phase = i * 0.62;
-  const left = 170 + 92 * Math.sin(phase);
-  const right = 170 - 92 * Math.sin(phase);
-  return { y, left, right, opacity: 0.32 + 0.35 * Math.abs(Math.cos(phase)) };
-});
-
-export function HelixVisual() {
-  const reduced = useReducedMotion();
-  return (
-    <div
-      className="helix-shell"
-      aria-label="Illustrative DNA double helix with computational annotations"
-      role="img"
-    >
-      <div className="helix-grid" />
-      <div className="helix-corner top-left">FIG 01 / STRUCTURE ↔ SIGNAL</div>
-      <div className="helix-corner top-right">COMPUTATIONAL BIOLOGY</div>
-      <motion.svg
-        className="helix-svg"
-        viewBox="0 0 340 510"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        initial={reduced ? false : { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1 }}
-      >
-        <defs>
-          <linearGradient id="strandA" x1="60" y1="0" x2="270" y2="510">
-            <stop stopColor="#6ff4e2" />
-            <stop offset="1" stopColor="#418ece" />
-          </linearGradient>
-          <linearGradient id="strandB" x1="280" y1="0" x2="70" y2="510">
-            <stop stopColor="#637bc8" />
-            <stop offset="1" stopColor="#77e4db" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="6" />
-          </filter>
-        </defs>
-        <path
-          d={rungs
-            .map((r, i) => `${i ? "L" : "M"}${r.left.toFixed(1)} ${r.y}`)
-            .join(" ")}
-          stroke="#54d8d0"
-          strokeWidth="13"
-          opacity=".12"
-          filter="url(#glow)"
-        />
-        {rungs.map((r, i) => (
-          <g key={i}>
-            <line
-              x1={r.left}
-              x2={r.right}
-              y1={r.y}
-              y2={r.y}
-              stroke={i % 3 === 0 ? "#988ae4" : "#65b9c4"}
-              strokeWidth="1.5"
-              opacity={r.opacity}
-            />
-            <circle cx={r.left} cy={r.y} r="3.3" fill="#71e9dc" />
-            <circle cx={r.right} cy={r.y} r="3.3" fill="#7a91df" />
-          </g>
-        ))}
-        <path
-          d={rungs
-            .map((r, i) => `${i ? "L" : "M"}${r.left.toFixed(1)} ${r.y}`)
-            .join(" ")}
-          stroke="url(#strandA)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d={rungs
-            .map((r, i) => `${i ? "L" : "M"}${r.right.toFixed(1)} ${r.y}`)
-            .join(" ")}
-          stroke="url(#strandB)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle
-          cx="170"
-          cy="255"
-          r="145"
-          stroke="#3f7485"
-          strokeDasharray="3 8"
-          opacity=".25"
-        />
-      </motion.svg>
-      <span className="helix-data data-one">
-        010101&nbsp; 110010&nbsp; 001011
-      </span>
-      <span className="helix-data data-two">
-        A—T&nbsp;&nbsp; C≡G&nbsp;&nbsp; G≡C
-      </span>
-      <span className="helix-corner bottom-left">
-        BIOLOGY / DATA / DISCOVERY
-      </span>
-      <span className="helix-corner bottom-right">01—19</span>
-    </div>
-  );
-}
-
 export function ProteinVisual({ small = false }: { small?: boolean }) {
   const nodes = [
     [45, 56, 13],
@@ -196,10 +90,6 @@ export function ProteinVisual({ small = false }: { small?: boolean }) {
         />
         <circle cx="159" cy="119" r="28" stroke="#f2b99b" opacity=".55" />
       </svg>
-      <div className="visual-footer">
-        <span>RECEPTOR / EXOSOMAL PROTEIN</span>
-        <span>FIG. 01</span>
-      </div>
     </div>
   );
 }
@@ -278,10 +168,6 @@ export function FluxVisual({ small = false }: { small?: boolean }) {
           opacity=".38"
         />
       </svg>
-      <div className="visual-footer">
-        <span>CONSTRAINT-BASED MODELING</span>
-        <span>FIG. 02</span>
-      </div>
     </div>
   );
 }
@@ -290,12 +176,10 @@ export function SectionHeading({
   eyebrow,
   title,
   intro,
-  index,
 }: {
   eyebrow: string;
   title: string;
   intro?: string;
-  index?: string;
 }) {
   return (
     <div className="section-heading">
@@ -303,7 +187,6 @@ export function SectionHeading({
         <span className="eyebrow">
           <i className="eyebrow-dot" /> {eyebrow}
         </span>
-        {index && <span className="section-index">{index} / 05</span>}
       </div>
       <h2>{title}</h2>
       {intro && <p>{intro}</p>}
