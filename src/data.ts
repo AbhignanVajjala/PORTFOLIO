@@ -138,6 +138,7 @@ export const conferences: Conference[] = [
     status: "Abstract Accepted",
     description:
       "Abstract accepted. Did not attend or present because of academic examinations.",
+    url: "https://www.vesicon2026.com/",
   },
   {
     date: "OCT 10, 2026",
