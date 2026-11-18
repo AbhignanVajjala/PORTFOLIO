@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
   Link,
   Route,
   Routes,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import {
   ArrowLeft,
@@ -15,10 +14,8 @@ import {
   BookOpen,
   Braces,
   ChartNoAxesCombined,
-  Check,
   ChevronRight,
   CircleDot,
-  Code2,
   Dna,
   ExternalLink,
   Github,
@@ -28,7 +25,6 @@ import {
   Orbit,
   X,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   conferences,
   interests,
@@ -46,26 +42,31 @@ import {
   SectionHeading,
 } from "./Visuals";
 import { HelixScene } from "./HelixScene";
+import { siteMetadata } from "./seo";
 
 const externalProps = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 function ScrollManager() {
-  const { pathname, hash } = useLocation();
+  const { key, hash } = useLocation();
+  const previousKey = useRef(key);
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      if (hash)
-        document
-          .getElementById(hash.slice(1))
-          ?.scrollIntoView({ behavior: "smooth" });
-      else window.scrollTo({ top: 0, behavior: "instant" });
-    }, 70);
-    return () => window.clearTimeout(timer);
-  }, [pathname, hash]);
+    const navigated = previousKey.current !== key;
+    previousKey.current = key;
+    if (hash) {
+      const target = document.getElementById(hash.slice(1));
+      if (navigated) target?.focus({ preventScroll: true });
+      target?.scrollIntoView();
+    } else if (navigated) {
+      document.getElementById("main-content")?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [key, hash]);
   return null;
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const menuToggle = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   useEffect(() => setOpen(false), [location]);
   const nav = [
@@ -76,7 +77,15 @@ function Header() {
     ["Contact", "/#contact"],
   ];
   return (
-    <header className="site-header">
+    <header
+      className="site-header"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          setOpen(false);
+          menuToggle.current?.focus();
+        }
+      }}
+    >
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -99,33 +108,30 @@ function Header() {
           GET IN TOUCH <ArrowUpRight size={14} />
         </a>
         <button
+          ref={menuToggle}
           className="menu-toggle"
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X size={21} /> : <Menu size={21} />}
         </button>
       </div>
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            className="mobile-nav"
-            aria-label="Mobile navigation"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            {nav.map(([label, url]) => (
-              <Link to={url} onClick={() => setOpen(false)} key={label}>
-                {label}
-                <ArrowUpRight size={16} />
-              </Link>
-            ))}
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <nav
+        id="mobile-navigation"
+        className="mobile-nav"
+        aria-label="Mobile navigation"
+        hidden={!open}
+      >
+        {nav.map(([label, url]) => (
+          <Link to={url} onClick={() => setOpen(false)} key={label}>
+            {label}
+            <ArrowUpRight size={16} />
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
@@ -192,15 +198,13 @@ function ProjectLinks({
           Explore Project <ArrowUpRight size={16} />
         </Link>
       )}
-      {project.demoUrl && (
-        <a
-          className={`button ${detail ? "button-primary" : "button-outline"}`}
-          href={project.demoUrl}
-          {...externalProps}
-        >
-          Launch Interactive Demo <ExternalLink size={15} />
-        </a>
-      )}
+      <a
+        className={`button ${detail ? "button-primary" : "button-outline"}`}
+        href={project.demoUrl}
+        {...externalProps}
+      >
+        Interactive Demo <ExternalLink size={15} />
+      </a>
       <a className="text-link" href={project.sourceUrl} {...externalProps}>
         View Source <ArrowUpRight size={15} />
       </a>
@@ -213,15 +217,6 @@ function ProjectCard({ project }: { project: Project }) {
     <Reveal className="project-reveal">
       <article className={`project-card project-${project.accent}`}>
         <div className="project-card-content">
-          <div className="project-topline">
-            <span>PROJECT / {project.index}</span>
-            <span>
-              <CircleDot size={13} />{" "}
-              {project.accent === "teal"
-                ? "STRUCTURAL SYSTEMS"
-                : "METABOLIC SYSTEMS"}
-            </span>
-          </div>
           <div>
             <span className="tag">{project.category}</span>
             <h3>
@@ -244,7 +239,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 function Hero() {
   return (
-    <section className="hero" id="home">
+    <section className="hero" id="home" tabIndex={-1}>
       <HelixScene />
       <div className="wrap hero-layout">
         <div className="hero-copy">
@@ -266,20 +261,6 @@ function Hero() {
             >
               GitHub <Github size={17} />
             </a>
-            <Link className="button button-quiet" to="/#contact">
-              Contact <ArrowRight size={17} />
-            </Link>
-          </div>
-          <div className="hero-affiliation">
-            <span className="affiliation-bar" />
-            <div>
-              <strong>Department of Biotechnology</strong>
-              <span>
-                VNR Vignana Jyothi Institute of Engineering and Technology (VNR
-                VJIET)
-              </span>
-              <span>Hyderabad, India</span>
-            </div>
           </div>
         </div>
       </div>
@@ -292,13 +273,14 @@ function About() {
     Atom,
     Network,
     Dna,
+    CircleDot,
     ChartNoAxesCombined,
     Orbit,
     CircleDot,
     Braces,
   ];
   return (
-    <section className="section about-section" id="about">
+    <section className="section about-section" id="about" tabIndex={-1}>
       <div className="wrap about-layout">
         <div>
           <SectionHeading
@@ -306,27 +288,21 @@ function About() {
             title="Curiosity, made computational."
           />
           <Reveal className="about-copy">
-            <h3>About Me</h3>
             <p>
-              I'm a biotechnology undergraduate at VNR VJIET, Hyderabad,
-              interested in understanding biological systems through
-              computational approaches.
+              I’m pursuing a B.Tech in Biotechnology at {person.institute} (VNR
+              VJIET) in Hyderabad, India.
             </p>
             <p>
-              My work spans structural bioinformatics, protein interactions,
-              computational cancer biology, and genome-scale metabolic modeling.
-            </p>
-            <p>
-              Alongside biological research, I enjoy programming and developing
-              computational tools that support scientific investigation and
-              communication.
+              I’m interested in how models can guide the next experiment, from
+              choosing which protein interactions to examine to understanding
+              how metabolic constraints shape product flux. I build interactive
+              tools to make those comparisons easier to inspect.
             </p>
           </Reveal>
         </div>
         <Reveal className="interests-panel">
           <div className="panel-head">
             <span>AREAS OF INTEREST</span>
-            <span>07 DOMAINS</span>
           </div>
           <div className="interest-list">
             {interests.map((interest, i) => {
@@ -346,6 +322,7 @@ function About() {
 }
 
 function ConferenceEntry({ entry }: { entry: Conference }) {
+  const project = projects.find((item) => item.id === entry.projectId);
   return (
     <Reveal className="timeline-item">
       <div className="timeline-axis">
@@ -364,17 +341,20 @@ function ConferenceEntry({ entry }: { entry: Conference }) {
         </div>
         <p className="timeline-venue">{entry.venue}</p>
         <p>{entry.description}</p>
-        {entry.projectId && (
-          <Link className="timeline-link" to={`/projects/${entry.projectId}`}>
-            View {projects.find((p) => p.id === entry.projectId)?.name} project{" "}
-            <ArrowUpRight size={14} />
-          </Link>
-        )}
-        {entry.url && (
-          <a className="timeline-link" href={entry.url} {...externalProps}>
-            Conference website <ArrowUpRight size={14} />
-          </a>
-        )}
+        {entry.details && <p>{entry.details}</p>}
+        <div className="timeline-actions">
+          {project && (
+            <Link className="timeline-link" to={`/projects/${project.id}`}>
+              View {project.name} project <ArrowUpRight size={14} />
+            </Link>
+          )}
+          {entry.url && (
+            <a className="timeline-link" href={entry.url} {...externalProps}>
+              {entry.linkLabel ?? "Conference website"}{" "}
+              <ArrowUpRight size={14} />
+            </a>
+          )}
+        </div>
       </div>
     </Reveal>
   );
@@ -382,12 +362,12 @@ function ConferenceEntry({ entry }: { entry: Conference }) {
 
 function Research() {
   return (
-    <section className="section research-section" id="research">
+    <section className="section research-section" id="research" tabIndex={-1}>
       <div className="wrap">
         <SectionHeading
           eyebrow="RESEARCH JOURNEY"
           title="Conversations beyond the lab."
-          intro="Participation, presentations, and academic recognition along the way."
+          intro="Conference participation, student research presentations, and abstract acceptance."
         />
         <div className="timeline">
           {conferences.map((entry) => (
@@ -410,9 +390,8 @@ function Toolkit() {
         />
         <div className="toolkit-layout">
           <div className="toolkit-list">
-            {toolkit.map((item, i) => (
+            {toolkit.map((item) => (
               <Reveal className="toolkit-row" key={item.category}>
-                <span className="toolkit-num">0{i + 1}</span>
                 <h3>{item.category}</h3>
                 <p>{item.items}</p>
               </Reveal>
@@ -465,7 +444,7 @@ function Toolkit() {
 
 function Contact() {
   return (
-    <section className="contact-section" id="contact">
+    <section className="contact-section" id="contact" tabIndex={-1}>
       <div className="wrap contact-inner">
         <div className="contact-orbit" aria-hidden="true">
           <div />
@@ -480,8 +459,8 @@ function Contact() {
             Let's <em>connect.</em>
           </h2>
           <p>
-            Interested in computational biology, scientific programming, or
-            research collaboration? Feel free to get in touch.
+            Get in touch about computational biology projects, research
+            opportunities, or scientific software.
           </p>
           <a className="contact-email" href={`mailto:${person.email}`}>
             {person.email}
@@ -505,38 +484,16 @@ function Contact() {
 }
 
 export function Home() {
-  useEffect(() => {
-    document.title =
-      "Abhignan Vajjala — Computational Biology & Research Software";
-    document
-      .querySelector("meta[name=description]")
-      ?.setAttribute(
-        "content",
-        "Abhignan Vajjala explores computational biology, structural bioinformatics, systems biology, and research software.",
-      );
-    document
-      .querySelector('meta[property="og:title"]')
-      ?.setAttribute(
-        "content",
-        "Abhignan Vajjala — Computational Biology & Research Software",
-      );
-    document
-      .querySelector('meta[property="og:description"]')
-      ?.setAttribute(
-        "content",
-        "Exploring biological systems through computation. Research, modeling, and scientific software by Abhignan Vajjala.",
-      );
-  }, []);
   return (
-    <main id="main-content">
+    <main id="main-content" tabIndex={-1}>
       <Hero />
-      <section className="section projects-section" id="projects">
+      <section className="section projects-section" id="projects" tabIndex={-1}>
         <BioAtmosphere kind="cell" />
         <div className="wrap">
           <SectionHeading
             eyebrow="SELECTED WORK"
             title="Research in motion."
-            intro="Computational investigations shaped into workflows and interactive tools."
+            intro="Explore two modeling projects, from the research question to the results and their limits."
           />
           <div className="project-list">
             {projects.map((p) => (
@@ -553,227 +510,161 @@ export function Home() {
   );
 }
 
-export function ProjectDetail() {
-  const { slug } = useParams();
-  const project = projects.find((p) => p.id === slug);
-  useEffect(() => {
-    const title = project
-      ? `${project.name} — Abhignan Vajjala`
-      : "Project Not Found — Abhignan Vajjala";
-    document.title = title;
-    document
-      .querySelector('meta[property="og:title"]')
-      ?.setAttribute("content", title);
-    if (project) {
-      document
-        .querySelector("meta[name=description]")
-        ?.setAttribute("content", project.short);
-      document
-        .querySelector('meta[property="og:description"]')
-        ?.setAttribute("content", project.short);
-    }
-  }, [project]);
-  if (!project)
-    return (
-      <section className="not-found wrap">
-        <span className="eyebrow">404 / PROJECT</span>
-        <h1>Project not found.</h1>
-        <Link className="button button-primary" to="/#projects">
-          Back to Projects <ArrowLeft size={16} />
-        </Link>
-      </section>
-    );
-  const isExo = project.id === "exo-target";
+const detailNavigation = [
+  ["question", "Research question"],
+  ["methods", "Methods"],
+  ["findings", "Findings"],
+  ["limitations", "Limitations"],
+  ["implementation", "Research software"],
+];
+
+function ProjectDetail({ project }: { project: Project }) {
+  const nextProject = projects.find((item) => item.id !== project.id)!;
   return (
-    <main id="main-content" className={`detail-page detail-${project.accent}`}>
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className={`detail-page detail-${project.accent}`}
+    >
       <div className="detail-hero">
         <div className="wrap">
           <Link className="back-link" to="/#projects">
-            <ArrowLeft size={15} /> BACK TO PROJECTS
+            <ArrowLeft size={15} /> Back to projects
           </Link>
           <div className="detail-hero-grid">
             <div>
-              <div className="detail-pretitle">
-                <span className="signal-dot" /> RESEARCH PROJECT /{" "}
-                {project.index}
-              </div>
+              <p className="detail-pretitle">
+                <span className="signal-dot" /> {project.status}
+              </p>
               <h1>
                 {project.name}
-                <span>.</span>
+                <span aria-hidden="true">.</span>
               </h1>
               <p className="detail-category">{project.category}</p>
               <p className="detail-lede">{project.overview}</p>
               <ProjectLinks project={project} detail />
             </div>
             <div className="detail-visual">
-              {isExo ? <ProteinVisual /> : <FluxVisual />}
+              {project.id === "exo-target" ? <ProteinVisual /> : <FluxVisual />}
             </div>
-          </div>
-          <div className="detail-meta">
-            <span>
-              DOMAIN / {isExo ? "STRUCTURAL BIOINFORMATICS" : "SYSTEMS BIOLOGY"}
-            </span>
-            <span>
-              METHOD /{" "}
-              {isExo ? "PROTEIN INTERACTIONS" : "FLUX BALANCE ANALYSIS"}
-            </span>
-            <span>OUTPUT / RESEARCH + SOFTWARE</span>
           </div>
         </div>
       </div>
       <div className="wrap detail-content">
-        <div className="detail-sidebar">
+        <nav className="detail-sidebar" aria-label="On this page">
           <span>ON THIS PAGE</span>
-          <a href="#question">01 / Question</a>
-          <a href="#methods">02 / Methods</a>
-          <a href="#implementation">03 / Implementation</a>
-          <a href="#findings">04 / Findings</a>
-          <a href="#limitations">05 / Limitations</a>
-          <a href="#resources">06 / Resources</a>
-        </div>
+          {detailNavigation.map(([id, label]) => (
+            <Link to={`#${id}`} key={id}>
+              {label}
+            </Link>
+          ))}
+        </nav>
         <div className="detail-sections">
-          <section id="question">
-            <span className="detail-section-label">01 / RESEARCH QUESTION</span>
-            <h2>What are we trying to understand?</h2>
+          <section id="question" tabIndex={-1}>
+            <h2>Research question</h2>
             <p className="big-statement">{project.question}</p>
-            {!isExo && (
-              <p>
-                In cyanobacteria, the focus is carbon allocation, glycogen
-                metabolism, and theoretical triacylglycerol (TAG) capacity using
-                the iRH783 model. In E. coli BL21(DE3), the focus is recombinant
-                proinsulin production under changing simulated constraints using
-                the iHK1487 model.
-              </p>
-            )}
           </section>
-          <section id="methods">
-            <span className="detail-section-label">02 / METHODS & TOOLS</span>
-            <h2>Scientific approach.</h2>
-            <p>
-              {isExo
-                ? "The analysis combines predicted protein structures, structural confidence, calculated binding energetics, interaction evidence, and biological feasibility."
-                : "Constraint-based Flux Balance Analysis uses genome-scale models to explore how metabolic pathways respond to defined simulated constraints."}
-            </p>
-            <div className="method-grid">
-              {project.methods.map((m, i) => (
-                <div key={m}>
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  {m}
-                </div>
+          <section id="methods" tabIndex={-1}>
+            <h2>Methods</h2>
+            <p>{project.methodsIntro}</p>
+            <ol className="method-grid" aria-label="Method overview">
+              {project.methods.map(({ title, text }) => (
+                <li key={title}>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </li>
               ))}
-            </div>
+            </ol>
           </section>
-          <section id="implementation">
-            <span className="detail-section-label">03 / RESEARCH SOFTWARE</span>
-            <h2>From analysis to interface.</h2>
-            <p>{project.implementation}</p>
-            <div className="detail-callout">
-              <Code2 size={22} />
-              <span>
-                {isExo
-                  ? "Computational analysis pipelines and interactive molecular result views are the development focus."
-                  : "The live frontend presents interactive views of model-based metabolic analysis."}
-              </span>
-            </div>
+          <section id="findings" tabIndex={-1}>
+            <h2>Findings</h2>
+            {project.findings.map(({ title, text, values }) => (
+              <article className="finding" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                {values && (
+                  <dl className="finding-values">
+                    {values.map(({ label, value }) => (
+                      <div key={label}>
+                        <dt>{label}</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </article>
+            ))}
           </section>
-          <section id="findings">
-            <span className="detail-section-label">04 / FINDINGS</span>
-            <h2>What the modeling suggests.</h2>
+          <section id="limitations" tabIndex={-1}>
+            <h2>Limitations</h2>
             <ul className="detail-list">
-              {project.findings.map((f) => (
-                <li key={f}>
-                  <Check size={17} />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-            {!isExo && (
-              <p className="evidence-note">
-                7.96% is a simulated change in theoretical TAG capacity under
-                the project's documented model-comparison conditions.
-              </p>
-            )}
-          </section>
-          <section id="limitations">
-            <span className="detail-section-label">05 / LIMITATIONS</span>
-            <h2>Interpretation matters.</h2>
-            <ul className="detail-list limitations-list">
-              {project.limitations.map((l) => (
-                <li key={l}>
-                  <CircleDot size={17} />
-                  <span>{l}</span>
+              {project.limitations.map((limitation) => (
+                <li key={limitation}>
+                  <CircleDot size={17} aria-hidden="true" />
+                  <span>{limitation}</span>
                 </li>
               ))}
             </ul>
           </section>
-          <section id="resources">
-            <span className="detail-section-label">06 / EXPLORE FURTHER</span>
-            <h2>Project resources.</h2>
-            <div className="resource-links">
-              <a href={project.sourceUrl} {...externalProps}>
-                <Github size={20} />
-                <span>
-                  <strong>Source repository</strong>
-                  <small>Documentation and code</small>
-                </span>
-                <ArrowUpRight size={18} />
-              </a>
-              {project.demoUrl && (
-                <a href={project.demoUrl} {...externalProps}>
-                  <ExternalLink size={20} />
-                  <span>
-                    <strong>Interactive demo</strong>
-                    <small>Explore the live frontend</small>
-                  </span>
-                  <ArrowUpRight size={18} />
-                </a>
-              )}
-            </div>
+          <section id="implementation" tabIndex={-1}>
+            <h2>Research software</h2>
+            <p>{project.implementation}</p>
           </section>
         </div>
       </div>
       <div className="wrap next-project">
         <span>NEXT PROJECT</span>
-        <Link to={`/projects/${isExo ? "fluxnova" : "exo-target"}`}>
-          {isExo ? "FLUXNOVA" : "EXO-TARGET"} <ArrowRight size={24} />
+        <Link to={`/projects/${nextProject.id}`}>
+          {nextProject.name} <ArrowRight size={24} />
         </Link>
       </div>
     </main>
   );
 }
 
-function AppRoutes() {
-  const reduced = useReducedMotion();
+function NotFound() {
+  return (
+    <main id="main-content" tabIndex={-1} className="not-found wrap">
+      <h1>Page not found.</h1>
+      <Link className="button button-primary" to="/#projects">
+        Back to projects <ChevronRight size={16} />
+      </Link>
+    </main>
+  );
+}
+
+function PageMetadata() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const metadata = siteMetadata(pathname);
+    document.title = metadata.title;
+    for (const [element, key, name, attribute, value] of metadata.tags) {
+      document.head
+        .querySelector(`${element}[${key}="${name}"]`)
+        ?.setAttribute(attribute, value);
+    }
+  }, [pathname]);
+  return null;
+}
+
+export function AppRoutes() {
   return (
     <>
+      <PageMetadata />
       <ScrollManager />
       <Header />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={useLocation().pathname}
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={reduced ? undefined : { opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects/:slug" element={<ProjectDetail />} />
-            <Route
-              path="*"
-              element={
-                <section className="not-found wrap">
-                  <span className="eyebrow">404 / PAGE</span>
-                  <h1>Page not found.</h1>
-                  <Link className="button button-primary" to="/">
-                    Back Home <ChevronRight size={16} />
-                  </Link>
-                </section>
-              }
-            />
-          </Routes>
-        </motion.div>
-      </AnimatePresence>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {projects.map((project) => (
+          <Route
+            key={project.id}
+            caseSensitive
+            path={`/projects/${project.id}`}
+            element={<ProjectDetail key={project.id} project={project} />}
+          />
+        ))}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </>
   );

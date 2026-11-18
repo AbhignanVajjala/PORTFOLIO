@@ -1,17 +1,24 @@
+type ResearchTopic = {
+  title: string;
+  text: string;
+  values?: { label: string; value: string }[];
+};
+
 export type Project = {
   id: string;
-  index: string;
   name: string;
   category: string;
+  status: string;
   short: string;
   overview: string;
   question: string;
-  methods: string[];
+  methodsIntro: string;
+  methods: ResearchTopic[];
   implementation: string;
-  findings: string[];
+  findings: ResearchTopic[];
   limitations: string[];
   sourceUrl: string;
-  demoUrl: string | null;
+  demoUrl: string;
   accent: "teal" | "violet";
 };
 
@@ -19,29 +26,20 @@ export type Conference = {
   date: string;
   title: string;
   venue: string;
-  status:
-    | "Participated"
-    | "Abstract Accepted"
-    | "Attended"
-    | "Presented"
-    | "Upcoming";
+  status: "Participated" | "Abstract Accepted" | "Attended" | "Presented";
   description: string;
+  details?: string;
   projectId?: string;
   url?: string;
+  linkLabel?: string;
 };
 
 export const person = {
   name: "Abhignan Vajjala",
-  descriptor:
-    "Biotechnology Undergraduate | Computational Biology & Research Software",
-  headline: "Exploring biological systems through computation.",
+  descriptor: "B.Tech Biotechnology undergraduate at VNR VJIET, Hyderabad",
   intro:
-    "I work at the intersection of biotechnology and programming, investigating biological systems through computational modeling, structural analysis, and research-oriented software development.",
-  affiliation: [
-    "Department of Biotechnology",
-    "VNR Vignana Jyothi Institute of Engineering and Technology (VNR VJIET)",
-    "Hyderabad, India",
-  ],
+    "I model protein interactions and metabolic systems, and build software to explore the results.",
+  institute: "VNR Vignana Jyothi Institute of Engineering and Technology",
   email: "abhignanvajjala.2008@gmail.com",
   github: "https://github.com/AbhignanVajjala",
   linkedin: "https://www.linkedin.com/in/abhignan-vajjala-6211833b2/",
@@ -53,68 +51,108 @@ export const person = {
 export const projects: Project[] = [
   {
     id: "exo-target",
-    index: "01",
     name: "EXO-TARGET",
     accent: "teal",
-    category:
-      "Structural Bioinformatics / Protein Interactions / Cancer Biology",
+    category: "Structural bioinformatics · Cancer biology",
+    status: "Computational research",
     short:
-      "Mapping possible receptor–exosomal protein interactions in triple-negative breast cancer through structural analysis and biological evidence.",
+      "Prioritizing candidate interactions between tumor-cell receptors and exosomal proteins in triple-negative breast cancer.",
     overview:
-      "EXO-TARGET investigates computational interactions between triple-negative breast cancer-associated cell-surface receptors and exosomal proteins. It brings structural analysis and biological evidence together to prioritize candidate molecular interactions for further investigation.",
+      "Triple-negative breast cancer (TNBC) tests negative for estrogen and progesterone receptors and for HER2 overexpression or amplification, limiting the use of therapies directed at those markers. EXO-TARGET asks which proteins could interact with TNBC-associated cell-surface receptors if exposed on the surface of exosomes, a type of extracellular vesicle.",
     question:
-      "Which receptor–exosomal protein pairs are structurally plausible and biologically relevant enough to warrant further investigation?",
+      "Which receptor–protein pairs should be tested first when structural confidence, predicted energetics, prior association evidence, and possible vesicle-surface exposure are considered together?",
+    methodsIntro:
+      "EXO-RANK is the scoring workflow within EXO-TARGET. It combines up to three available evidence scores for each pair and applies a separate surface-feasibility filter.",
     methods: [
-      "AlphaFold-Multimer",
-      "Protein structure analysis",
-      "Structural confidence metrics",
-      "PRODIGY-based binding energetics",
-      "STRING interaction evidence",
-      "Biological feasibility assessment",
+      {
+        title: "Predict complexes",
+        text: "AlphaFold-Multimer and AlphaFold 3 predictions supply structural confidence metrics. The score combines ipTM and pTM (interface and overall confidence), interface PAE (predicted alignment error), and mean pLDDT (local confidence).",
+      },
+      {
+        title: "Estimate interaction evidence",
+        text: "PRODIGY estimates binding free energy (ΔG) from predicted complexes where available. The estimates are scaled after limiting the effect of outliers. STRING adds a combined association score, largely driven by text mining in this dataset.",
+      },
+      {
+        title: "Rank with evidence coverage",
+        text: "The prioritization score averages the available 0–1 scores from AlphaFold, PRODIGY, and STRING with equal weight. Coverage counts the available scores separately, and missing values are left unfilled.",
+      },
+      {
+        title: "Filter for surface feasibility",
+        text: "UniProt localization and topology annotations inform whether a protein could face outward on a vesicle. The shortlist requires at least two evidence scores and a medium or high feasibility flag.",
+      },
     ],
     implementation:
-      "Python-based scientific workflows support structure and evidence analysis. Interactive visualization of molecular interaction results is being developed.",
+      "Python scripts integrate the evidence tables and assess rank sensitivity. The repository includes scoring outputs, predicted structures, and a FastAPI backend that serves them for inspection. The interactive frontend provides a molecular viewer and pages for exploring candidate pairs.",
+    // TNBC-PROJECT: final_score_calculation.csv, final_preferred_shortlist.csv, FINAL_EXO_RANK_RESULTS.md.
     findings: [
-      "A computational framework for assessing and prioritizing candidate receptor–exosomal protein interactions relevant to triple-negative breast cancer.",
+      {
+        title: "Coverage and feasibility narrowed the shortlist",
+        text: "Five shortlisted pairs had all three evidence scores, high surface feasibility, a top-quartile score, and stable ranks under the tested weightings. CD44–THBS1 was one example. The feasibility filter also excluded all TPI1 pairs despite high structural confidence for some of them.",
+        values: [
+          { label: "Pairs evaluated", value: "200" },
+          { label: "With at least two scores", value: "176" },
+          { label: "After feasibility filtering", value: "121" },
+        ],
+      },
     ],
     limitations: [
-      "Predicted structures and computed interaction scores do not establish experimentally verified binding.",
-      "Candidate interactions require biological and experimental follow-up.",
+      "The ranking uses heuristic weights without experimental interaction labels. Direct binding, vesicle-surface exposure, and targeting in TNBC remain to be tested.",
+      "The structural confidence and PRODIGY scores draw on the same predicted complex where both are available. STRING evidence was available for only 64 of 200 pairs and is mostly literature-derived association. Surface exposure inferred from localization remains uncertain.",
     ],
     sourceUrl: "https://github.com/AbhignanVajjala/TNBC-PROJECT",
     demoUrl: "https://tnbc-project-iota.vercel.app/",
   },
   {
     id: "fluxnova",
-    index: "02",
     name: "FLUXNOVA",
     accent: "violet",
-    category: "Systems Biology / Flux Balance Analysis / Metabolic Engineering",
+    category: "Systems biology · Metabolic modeling",
+    status: "Simulation-based investigation",
     short:
-      "Exploring metabolic design questions in cyanobacteria and E. coli with constraint-based genome-scale modeling.",
+      "Modeling carbon allocation to triacylglycerol in cyanobacteria and recombinant human proinsulin flux in E. coli.",
     overview:
-      "FLUXNOVA explores metabolic engineering using genome-scale metabolic models and constraint-based Flux Balance Analysis across two biological applications: carbon allocation and theoretical TAG production in Synechocystis sp. PCC 6803, and modeled recombinant proinsulin production in E. coli BL21(DE3).",
+      "FLUXNOVA uses flux balance analysis (FBA) to investigate two genome-scale models. One explores how cyanobacteria allocate carbon to triacylglycerol (TAG). The other estimates recombinant human proinsulin flux in E. coli.",
     question:
-      "How do simulated metabolic constraints change theoretical product capacity and pathway behavior in these model systems?",
+      "How does glycogen allocation affect theoretical TAG capacity in cyanobacteria? How do nutrient availability and minimum growth requirements affect predicted proinsulin flux in E. coli?",
+    methodsIntro:
+      "Python and COBRApy were used to optimize product flux subject to steady-state mass balance, reaction bounds, and each scenario’s biomass requirements.",
     methods: [
-      "Python",
-      "COBRApy",
-      "Flux Balance Analysis",
-      "iRH783 model of Synechocystis sp. PCC 6803",
-      "iHK1487 model of E. coli BL21(DE3)",
-      "Metabolic pathway analysis",
-      "Data visualization",
+      {
+        title: "Cyanobacteria and triacylglycerol",
+        text: "The iRH783 model of Synechocystis sp. PCC 6803 was extended with a proposed triacylglycerol (TAG) pathway. Simulations compared reference glycogen allocation with zero glycogen allocation at matched non-glycogen biomass demand to isolate the modeled carbon trade-off.",
+      },
+      {
+        title: "E. coli and recombinant human proinsulin",
+        text: "The iHK1487 model of Escherichia coli BL21(DE3) includes a reaction for the 86-amino-acid human proinsulin precursor. Simulations vary glucose and oxygen uptake limits and compare a fixed minimum growth rate with a minimum set to 80% of each nutrient scenario’s maximum growth.",
+      },
     ],
     implementation:
-      "Python and COBRApy workflows run model comparisons and pathway analysis; an interactive scientific frontend makes the simulation results explorable.",
+      "The React and TypeScript demo displays precomputed COBRApy results. Its controls select stored scenarios, so visitors can compare outcomes without launching new optimizations.",
+    // Metaforge: docs/DATA_PROVENANCE.md and both original console outputs in public/research.
     findings: [
-      "A simulated 7.96% increase in theoretical TAG capacity under the documented model-comparison conditions.",
-      "The E. coli application explores modeled recombinant proinsulin production under varying simulated metabolic constraints.",
+      {
+        title: "Cyanobacteria · 7.96% higher theoretical TAG capacity",
+        text: "At 80% of the reference non-glycogen biomass flux, removing the imposed glycogen allocation increased maximum TAG capacity. Both scenarios included the added TAG pathway. A separate GLGC-only control showed no TAG benefit. Capacity is reported in model flux units.",
+        values: [
+          { label: "Reference glycogen allocation", value: "0.01987" },
+          { label: "Zero glycogen allocation", value: "0.02145" },
+        ],
+      },
+      {
+        title:
+          "E. coli · Growth requirements changed predicted proinsulin flux",
+        text: "Both best-case scenarios used 1.2× the reference glucose and oxygen uptake limits. Holding minimum growth at 0.656 h⁻¹ left more capacity for proinsulin than requiring 80% of the nutrient scenario’s maximum growth. Fluxes are in mmol proinsulin per gram of dry cell weight per hour (mmol/gDCW/h).",
+        values: [
+          { label: "Reference", value: "0.02475" },
+          { label: "Fixed minimum growth", value: "0.05010" },
+          { label: "Adaptive minimum growth", value: "0.02996" },
+        ],
+      },
     ],
     limitations: [
-      "The 7.96% figure is a simulation-derived theoretical result, not an experimentally verified increase in biodiesel yield or a confirmed genetic-engineering improvement.",
-      "The E. coli model concerns proinsulin production, not mature insulin production.",
-      "Model outputs depend on assumptions and constraints and need experimental validation.",
+      "The TAG comparison estimates theoretical capacity. Measured TAG production, downstream biodiesel yield, and the effects of genetic interventions remain unverified.",
+      "The E. coli flux describes synthesis of a precursor that would require further processing to become mature insulin. Fitness and product formation under these nutrient conditions need experimental testing, including fermentation yield and titer.",
+      "The repository preserves the reported outputs. Original Python notebooks, exact model files and versions, and full solver and medium settings needed to rerun the analyses are unavailable there.",
     ],
     sourceUrl: "https://github.com/AbhignanVajjala/Metaforge",
     demoUrl: "https://metaforge-xi.vercel.app/",
@@ -123,7 +161,7 @@ export const projects: Project[] = [
 
 export const conferences: Conference[] = [
   {
-    date: "SEP 12, 2026",
+    date: "Sep 12, 2026",
     title: "National Level Ideathon 5.0 Life Sciences × AI",
     venue: "CBIT · Hyderabad, India",
     status: "Participated",
@@ -132,24 +170,26 @@ export const conferences: Conference[] = [
     projectId: "exo-target",
   },
   {
-    date: "OCT 05–07, 2026",
+    date: "Oct 5–7, 2026",
     title: "VESICON 2026",
     venue: "AIIMS · New Delhi, India",
     status: "Abstract Accepted",
     description:
-      "Abstract accepted. Did not attend or present because of academic examinations.",
+      "The abstract was accepted. Academic examinations prevented attendance and presentation.",
     url: "https://www.vesicon2026.com/",
   },
   {
-    date: "OCT 10, 2026",
+    date: "Oct 10, 2026",
     title: "ICSEED 2026",
     venue: "CBIT · Hyderabad, India",
-    status: "Attended",
-    description: "Attended the conference.",
-    url: "https://icseed2026.info/",
+    status: "Participated",
+    description:
+      "Took part in the October 10 program on sustainable energy, environment, and development.",
+    url: "https://www.cbit.ac.in/events_post/icseed-2026/",
+    linkLabel: "CBIT event page",
   },
   {
-    date: "OCT 17, 2026",
+    date: "Oct 17, 2026",
     title: "Future Forge Innovation Ideathon 5.0",
     venue: "Organized by ACIC–CBIT · CBIT, Hyderabad, India",
     status: "Presented",
@@ -158,13 +198,18 @@ export const conferences: Conference[] = [
     projectId: "fluxnova",
   },
   {
-    date: "NOV 02–03, 2026",
-    title:
-      "International Conference on Integrative Oncology, Phytopharmaceutical Innovation and Translational Cancer Research",
-    venue: "Metro College of Health Sciences & Research · Greater Noida, India",
-    status: "Upcoming",
+    date: "Nov 13–14, 2026",
+    title: "AIU ANVESHAN 2026 — South Zone Student Research Convention",
+    venue:
+      "University College of Engineering, Osmania University · Hyderabad, India",
+    status: "Participated",
     description:
-      "Upcoming event; attendance and presentation have not been confirmed.",
+      "Presented EXO-TARGET under Health Sciences and Allied Subjects as the sole member of Team PHOENIX.",
+    details:
+      "Organised by the Association of Indian Universities (AIU) and hosted by Osmania University.",
+    projectId: "exo-target",
+    url: "https://projectset.com/anveshan",
+    linkLabel: "Participation portal",
   },
 ];
 
@@ -172,6 +217,7 @@ export const interests = [
   "Computational Biology",
   "Structural Bioinformatics",
   "Computational Cancer Biology",
+  "Protein Interactions",
   "Systems Biology",
   "Genome-Scale Metabolic Modeling",
   "Computational Drug Discovery",

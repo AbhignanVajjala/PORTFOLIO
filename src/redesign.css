@@ -90,9 +90,6 @@ body {
   line-height: 1.72;
   color: #bbced1;
 }
-.section-index {
-  display: none;
-}
 .button {
   min-height: 50px;
   padding: 0 20px;
@@ -111,7 +108,6 @@ body {
 
 .hero {
   isolation: isolate;
-  min-height: 760px;
   background: radial-gradient(
     ellipse 70% 100% at 88% 44%,
     #113c4b 0%,
@@ -121,13 +117,6 @@ body {
 }
 .hero:before {
   z-index: 1;
-  background: linear-gradient(
-    90deg,
-    #071522 0%,
-    #071522f2 29%,
-    #071522b0 54%,
-    transparent 83%
-  );
   mask-image: none;
 }
 .hero:after {
@@ -139,32 +128,13 @@ body {
   background: linear-gradient(transparent, #071522);
   pointer-events: none;
 }
-.hero-layout {
-  display: flex;
-  align-items: center;
-  min-height: 760px;
-  padding-block: 110px;
-}
 .hero-copy {
   position: relative;
   z-index: 2;
-  width: min(720px, 65%);
 }
 .hero-scene {
   position: absolute;
   z-index: 0;
-  top: 0;
-  right: -2%;
-  width: min(79%, 1120px);
-  height: 100%;
-  pointer-events: none;
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    #000 22%,
-    #000 91%,
-    transparent 100%
-  );
 }
 .hero-circuit,
 .hero-helix-canvas {
@@ -173,19 +143,8 @@ body {
   width: 100%;
   height: 100%;
 }
-.hero-circuit {
-  opacity: 0.72;
-}
 .hero-helix-canvas {
   display: block;
-}
-.hero-kicker {
-  color: #8ee3db;
-  font:
-    700 13px "Manrope Variable",
-    sans-serif;
-  letter-spacing: 2px;
-  margin-bottom: 27px;
 }
 .hero-name {
   color: #f3fafa;
@@ -196,13 +155,11 @@ body {
   margin: 0 0 20px;
 }
 .hero h2 {
-  max-width: 760px;
   color: #f5faf9;
   font:
     700 clamp(47px, 5vw, 72px)/1.13 "Manrope Variable",
     sans-serif;
   letter-spacing: -3px;
-  text-wrap: balance;
   margin: 0;
 }
 .hero h2 em {
@@ -214,36 +171,15 @@ body {
     650 16px/1.65 "Manrope Variable",
     sans-serif;
   margin: 30px 0 13px;
-  max-width: 620px;
 }
 .hero-intro {
   color: #bdcfd4;
   font-size: 19px;
   line-height: 1.74;
-  max-width: 610px;
 }
 .hero-actions {
   margin-top: 33px;
   gap: 13px;
-}
-.hero-affiliation {
-  margin-top: 48px;
-  gap: 18px;
-}
-.affiliation-bar {
-  width: 3px;
-  border-radius: 3px;
-  background: #76d8d1;
-}
-.hero-affiliation div {
-  color: #aabfc5;
-  font-size: 14px;
-  line-height: 1.48;
-  gap: 5px;
-}
-.hero-affiliation strong {
-  color: #e3f0ef;
-  font-size: 15px;
 }
 
 .projects-section,
@@ -251,7 +187,6 @@ body {
 .toolkit-section {
   background: #081723;
 }
-.process-section,
 .research-section {
   background: #0a1c2a;
   border-color: #23404b;
@@ -269,11 +204,6 @@ body {
 .project-card-content {
   padding: 43px;
   gap: 28px;
-}
-.project-topline {
-  color: #a8c9cd;
-  font-size: 12px;
-  letter-spacing: 0.8px;
 }
 .tag {
   display: block;
@@ -334,38 +264,6 @@ body {
 .visual-label span {
   color: #9db6bd;
 }
-.visual-footer {
-  display: none;
-}
-
-.process-grid {
-  border-color: #31505b;
-  border-radius: 14px;
-  overflow: hidden;
-}
-.process-step {
-  min-height: 265px;
-  padding: 32px;
-  border-color: #31505b;
-  background: linear-gradient(145deg, #13344466, transparent);
-}
-.process-step-top {
-  font-size: 12px;
-}
-.process-step h3 {
-  font-size: 33px;
-  margin-top: 42px;
-}
-.process-step p {
-  color: #b3c9ce;
-  font-size: 17px;
-  line-height: 1.7;
-  max-width: 350px;
-}
-.process-arrow {
-  background: #102734;
-  border-color: #477785;
-}
 
 .about-copy {
   max-width: 610px;
@@ -387,10 +285,6 @@ body {
 .panel-head {
   color: #b7d9d9;
   font-size: 12px;
-}
-.panel-foot,
-.interest-number {
-  display: none;
 }
 .interest-row {
   min-height: 65px;
@@ -447,21 +341,11 @@ body {
   padding: 7px 11px;
   border-radius: 100px;
 }
-.timeline-count {
-  display: none;
-}
-.timeline-link {
-  margin-top: 8px;
-}
 
 .toolkit-row {
-  grid-template-columns: 38px 196px 1fr 20px;
   min-height: 105px;
   gap: 18px;
   border-color: #31515d;
-}
-.toolkit-num {
-  font-size: 12px;
 }
 .toolkit-row h3 {
   font-size: 18px;
@@ -569,11 +453,6 @@ body {
   font-size: 19px;
   line-height: 1.72;
 }
-.detail-meta {
-  color: #a9c7cb;
-  font-size: 12px;
-  line-height: 1.5;
-}
 .detail-visual .scientific-visual {
   background: #16364466;
   border: 1px solid #3b616b;
@@ -587,10 +466,6 @@ body {
   font-size: 13px;
   gap: 20px;
 }
-.detail-section-label {
-  font-size: 13px;
-  letter-spacing: 0.8px;
-}
 .detail-sections h2 {
   font-size: clamp(30px, 3vw, 42px);
 }
@@ -603,31 +478,9 @@ body {
   color: #e3f1f0;
   font-size: clamp(23px, 2.3vw, 30px);
 }
-.method-grid div {
-  color: #d0e1e2;
-  font-size: 16px;
-  min-height: 66px;
-}
-.method-grid span {
-  font-size: 12px;
-}
-.detail-callout {
-  color: #d1e3e2;
-  font-size: 17px;
-}
 .detail-list li {
   color: #c7d8d9;
   font-size: 17px;
-}
-.detail-sections .evidence-note {
-  color: #e0d8e9;
-  font-size: 16px;
-}
-.resource-links strong {
-  font-size: 16px;
-}
-.resource-links small {
-  font-size: 14px;
 }
 .next-project > span {
   font-size: 12px;
@@ -665,9 +518,6 @@ body {
   .toolkit-layout {
     gap: 34px;
   }
-  .toolkit-row {
-    grid-template-columns: 30px 150px 1fr 18px;
-  }
 }
 @media (max-width: 850px) {
   .wrap {
@@ -683,30 +533,19 @@ body {
     width: 200px;
     font-size: 11px;
   }
-  .hero-layout {
-    min-height: 850px;
-    padding-block: 92px;
-    align-items: flex-start;
+  .header-inner {
+    gap: 12px;
   }
-  .hero-copy {
-    width: min(100%, 640px);
+  .brand,
+  .brand-descriptor {
+    min-width: 0;
+  }
+  .menu-toggle {
+    flex: none;
   }
   .hero-scene {
-    width: 100%;
     right: -10%;
     top: 28%;
-    height: 72%;
-    opacity: 0.58;
-    mask-image: linear-gradient(
-      to bottom,
-      transparent,
-      #000 20%,
-      #000 83%,
-      transparent
-    );
-  }
-  .hero:before {
-    background: linear-gradient(#071522ec 0%, #071522cb 46%, transparent 75%);
   }
   .hero h2 {
     font-size: clamp(46px, 7.3vw, 64px);
@@ -718,9 +557,6 @@ body {
   }
   .project-graphic {
     min-height: 320px;
-  }
-  .toolkit-row {
-    grid-template-columns: 36px 190px 1fr 18px;
   }
   .detail-hero-grid {
     gap: 40px;
@@ -743,39 +579,15 @@ body {
     width: 190px;
     font-size: 10px;
   }
-  .hero-layout {
-    min-height: 770px;
-    padding-block: 68px 95px;
-  }
   .hero-scene {
     top: 36%;
     height: 64%;
-    opacity: 0.5;
     right: -15%;
     width: 125%;
   }
-  .hero-kicker {
-    font-size: 11px;
-    letter-spacing: 1.3px;
-    margin-bottom: 23px;
-  }
-  .hero-name {
-    font-size: 27px;
-    margin-bottom: 19px;
-  }
-  .hero h2 {
-    font-size: clamp(39px, 10.3vw, 55px);
-    letter-spacing: -2px;
-    line-height: 1.16;
-  }
   .hero-descriptor {
-    font-size: 14px;
     line-height: 1.55;
     margin-top: 24px;
-  }
-  .hero-intro {
-    font-size: 16px;
-    line-height: 1.65;
   }
   .hero-actions {
     gap: 9px;
@@ -784,15 +596,6 @@ body {
     min-height: 46px;
     font-size: 13px;
     padding-inline: 12px;
-  }
-  .hero-affiliation {
-    margin-top: 32px;
-  }
-  .hero-affiliation div {
-    font-size: 13px;
-  }
-  .hero-affiliation strong {
-    font-size: 14px;
   }
   .section {
     padding: 82px 0;
@@ -810,9 +613,6 @@ body {
   .project-card-content {
     padding: 27px;
     gap: 26px;
-  }
-  .project-topline {
-    font-size: 11px;
   }
   .tag {
     font-size: 12px;
@@ -834,16 +634,6 @@ body {
   }
   .visual-label {
     font-size: 11px;
-  }
-  .process-step {
-    min-height: 230px;
-    padding: 27px;
-  }
-  .process-step h3 {
-    font-size: 30px;
-  }
-  .process-step p {
-    font-size: 16px;
   }
   .about-copy h3 {
     font-size: 25px;
@@ -876,9 +666,6 @@ body {
   }
   .status-pill {
     font-size: 12px;
-  }
-  .toolkit-row {
-    grid-template-columns: 28px 1fr 18px;
   }
   .toolkit-row h3 {
     font-size: 17px;
@@ -921,9 +708,6 @@ body {
   .detail-pretitle {
     font-size: 12px;
   }
-  .detail-meta {
-    font-size: 11px;
-  }
   .detail-sections h2 {
     font-size: 30px;
   }
@@ -936,29 +720,9 @@ body {
   .detail-list li {
     font-size: 16px;
   }
-  .method-grid div {
-    font-size: 15px;
-  }
-  .resource-links strong {
-    font-size: 15px;
-  }
-  .resource-links small {
-    font-size: 13px;
-  }
 }
 
 /* Refinement: diagonal living-system imagery and quieter section transitions. */
-.hero-name {
-  font-size: clamp(30px, 2.8vw, 40px);
-  margin-bottom: 25px;
-}
-.hero-scene {
-  transform: rotate(-3deg) scale(1.04);
-  transform-origin: 55% 52%;
-}
-.hero-circuit {
-  opacity: 0.62;
-}
 .projects-section,
 .toolkit-section {
   position: relative;
@@ -1051,7 +815,6 @@ body {
   border-color: #85c7c2;
 }
 .toolkit-row {
-  grid-template-columns: 38px 196px 1fr 20px;
   padding-inline: 8px;
   transition:
     background 0.28s ease,
@@ -1068,6 +831,8 @@ body {
   width: 10px;
   height: 10px;
   justify-self: center;
+  grid-column: -2;
+  grid-row: 1;
   border: 1px solid #75c8c7;
   border-radius: 50%;
   box-shadow:
@@ -1118,7 +883,6 @@ body {
   height: 390px;
   border-radius: 54% 46% 57% 43% / 46% 54% 43% 57%;
   background: radial-gradient(ellipse at 56% 49%, #59aaa819, transparent 67%);
-  transform: translateY(-50%) rotate(-18deg);
 }
 .contact-orbit::before {
   border-radius: 48% 52% 57% 43% / 56% 44% 51% 49%;
@@ -1130,11 +894,6 @@ body {
   transform: rotate(28deg);
   background: radial-gradient(ellipse, #6bbdbb19, transparent 75%);
 }
-@media (max-width: 1100px) {
-  .toolkit-row {
-    grid-template-columns: 30px 150px 1fr 18px;
-  }
-}
 @media (max-width: 850px) {
   .bio-atmosphere-cell {
     width: 420px;
@@ -1145,16 +904,9 @@ body {
     width: 390px;
     left: -200px;
   }
-  .hero-scene {
-    transform: rotate(-3deg) scale(1.07);
-  }
-  .toolkit-row {
-    grid-template-columns: 36px 190px 1fr 18px;
-  }
 }
 @media (max-width: 600px) {
   .hero-name {
-    font-size: 29px;
     margin-bottom: 23px;
   }
   .hero-scene {
@@ -1184,16 +936,9 @@ body {
   .project-card:focus-within .project-graphic svg {
     transform: scale(1.025);
   }
-  .toolkit-row {
-    grid-template-columns: 28px 1fr 18px;
-  }
   .rosalind-motif {
     width: 130px;
     opacity: 0.15;
-  }
-  .contact-orbit {
-    right: -225px;
-    opacity: 0.38;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1208,7 +953,7 @@ body {
 }
 
 
-/* Centered hero and contact: explicit layout fix */
+/* Centered hero and contact */
 /* The helix spans the hero as an atmospheric background, never as a right column. */
 .hero {
   min-height: 0;
@@ -1260,24 +1005,8 @@ body {
 .hero-actions {
   justify-content: center;
 }
-.hero-affiliation {
-  justify-content: center;
-  margin-top: 42px;
-  text-align: center;
-}
-.hero-affiliation .affiliation-bar {
-  display: none;
-}
-.hero-affiliation div {
-  align-items: center;
-  text-align: center;
-}
 .hero-scene {
   inset: 0;
-  top: 0;
-  right: auto;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   transform: none;
@@ -1382,13 +1111,6 @@ body {
   }
   .hero-actions {
     justify-content: center;
-  }
-  .hero-affiliation {
-    justify-content: center;
-    margin-top: 34px;
-  }
-  .hero-affiliation div {
-    align-items: center;
   }
   .hero-scene {
     opacity: 0.25;

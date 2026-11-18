@@ -209,16 +209,17 @@ export function HelixScene() {
     const ctx = canvas?.getContext("2d", { alpha: true });
     if (!canvas || !ctx) return;
 
-    const mobile = window.matchMedia("(max-width: 700px)").matches;
+    const mobileLayout = window.matchMedia("(max-width: 700px)");
     let width = 0;
     let height = 0;
     let frame = 0;
+    let visible = true;
     let current = reducedMotion ? 0.55 : phaseForScroll(window.scrollY);
     let target = current;
 
     const paint = () => {
       if (width < 1 || height < 1) return;
-      drawHelix(ctx, width, height, current, mobile);
+      drawHelix(ctx, width, height, current, mobileLayout.matches);
       canvas.dataset.phase = current.toFixed(3);
     };
     const tick = () => {
@@ -230,6 +231,7 @@ export function HelixScene() {
       if (current !== target) frame = requestAnimationFrame(tick);
     };
     const onScroll = () => {
+      if (!visible) return;
       target = phaseForScroll(window.scrollY);
       if (!frame) frame = requestAnimationFrame(tick);
     };
@@ -237,7 +239,10 @@ export function HelixScene() {
       const rect = canvas.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
-      const ratio = Math.min(window.devicePixelRatio || 1, mobile ? 1.3 : 2);
+      const ratio = Math.min(
+        window.devicePixelRatio || 1,
+        mobileLayout.matches ? 1.3 : 2,
+      );
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -247,10 +252,23 @@ export function HelixScene() {
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
     resize();
-    if (!reducedMotion)
+    const visibility = reducedMotion
+      ? undefined
+      : new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          if (visible) onScroll();
+          else if (frame) {
+            cancelAnimationFrame(frame);
+            frame = 0;
+          }
+        });
+    if (visibility) {
+      visibility.observe(canvas);
       window.addEventListener("scroll", onScroll, { passive: true });
+    }
     return () => {
       observer.disconnect();
+      visibility?.disconnect();
       window.removeEventListener("scroll", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
@@ -260,7 +278,7 @@ export function HelixScene() {
     <div
       className="hero-scene"
       role="img"
-      aria-label="Illustrative DNA double helix with depth-based rotation linked to scrolling"
+      aria-label="Illustrative DNA double helix"
     >
       <CircuitField />
       <canvas
