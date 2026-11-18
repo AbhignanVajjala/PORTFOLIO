@@ -19,9 +19,12 @@ function addMetadata(html: string, path: string) {
     ([element, key, name, attribute, value]) =>
       `<${element} ${key}="${name}" ${attribute}="${escapeHtml(value)}" />`,
   );
-  return html.replace("<!--page-metadata-->", () =>
+  const titledHtml = html.replace(
+    /<title>[^<]*<\/title>/,
+    () => `<title>${escapeHtml(title)}</title>`,
+  );
+  return titledHtml.replace("<!--page-metadata-->", () =>
     [
-      `<title>${escapeHtml(title)}</title>`,
       ...elements,
       '<meta property="og:type" content="website" />',
       `<meta property="og:image" content="${socialImage}" />`,

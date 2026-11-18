@@ -7,10 +7,10 @@ export function siteMetadata(pathname: string) {
   const project = projects.find((item) => path === `/projects/${item.id}`);
   const known = path === "/" || Boolean(project);
   const title = project
-    ? `${project.name} — ${person.name}`
+    ? `${project.name} | ${person.name}`
     : path === "/"
-      ? `${person.name} — Computational Biology & Research Software`
-      : `Page not found — ${person.name}`;
+      ? `${person.name} | Computational Biology & Research Software`
+      : `Page not found | ${person.name}`;
   const description =
     project?.short ??
     (known

@@ -198,6 +198,14 @@ export const conferences: Conference[] = [
     projectId: "fluxnova",
   },
   {
+    date: "Nov 2–3, 2026",
+    title:
+      "International Conference on Integrative Oncology, Phytopharmaceutical Innovation and Translational Cancer Research",
+    venue: "Metro College of Health Sciences & Research · Greater Noida, India",
+    status: "Abstract Accepted",
+    description: "My research abstract was accepted for this conference.",
+  },
+  {
     date: "Nov 13–14, 2026",
     title: "AIU ANVESHAN 2026 — South Zone Student Research Convention",
     venue:
@@ -210,6 +218,17 @@ export const conferences: Conference[] = [
     projectId: "exo-target",
     url: "https://projectset.com/anveshan",
     linkLabel: "Participation portal",
+  },
+  {
+    date: "Nov 26–27, 2026",
+    title:
+      "NLSEV 2026 · Netherlands Society for Extracellular Vesicles 2026 Scientific Meeting",
+    venue: "De Puddingfabriek · Groningen, Netherlands",
+    status: "Abstract Accepted",
+    description:
+      "My research abstract was accepted for poster presentation at the scheduled meeting.",
+    details: "Organised by the Netherlands Society for Extracellular Vesicles.",
+    url: "https://www.nlsev.nl/evdelta/wp/nlsev-2026/",
   },
 ];
 
