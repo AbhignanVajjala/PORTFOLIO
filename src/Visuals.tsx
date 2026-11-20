@@ -1,5 +1,4 @@
-import { motion } from "motion/react";
-import { useId, type CSSProperties } from "react";
+import { useEffect, useId, useRef, type CSSProperties } from "react";
 
 export function ProteinVisual() {
   const gradient = useId();
@@ -267,12 +266,6 @@ export function SectionHeading({
   );
 }
 
-const revealMotion = {
-  initial: { y: 12 },
-  whileInView: { y: 0 },
-  viewport: { once: true, amount: 0.16 },
-  transition: { duration: 0.65 },
-};
 export function Reveal({
   children,
   className = "",
@@ -282,14 +275,25 @@ export function Reveal({
   className?: string;
   style?: CSSProperties;
 }) {
+  const element = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const target = element.current;
+    if (!target) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          target.dataset.revealed = "true";
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.16 },
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
   return (
-    <motion.div
-      {...revealMotion}
-      data-reveal=""
-      className={className}
-      style={style}
-    >
+    <div ref={element} data-reveal="" className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

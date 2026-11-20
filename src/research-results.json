@@ -1,0 +1,325 @@
+{
+  "sources": {
+    "tnbc": {
+      "repository": "https://github.com/AbhignanVajjala/TNBC-PROJECT",
+      "commit": "d7ac62df14a6426524807a9396e8de1211790a1d"
+    },
+    "metaforge": {
+      "repository": "https://github.com/AbhignanVajjala/Metaforge",
+      "commit": "f47186650e187899949e373216795cc90b54dd68"
+    },
+    "agent-skills": {
+      "repository": "https://github.com/AbhignanVajjala/Bioinformatics-agent-skills",
+      "commit": "98a9456132fb474996f4c5d566065925ed79551b"
+    }
+  },
+  "exo": {
+    "pairs": 200,
+    "receptors": 20,
+    "proteins": 21,
+    "coverage": {
+      "1/3": 24,
+      "2/3": 137,
+      "3/3": 39
+    },
+    "sourceCounts": {
+      "AFS": 200,
+      "PS": 151,
+      "SS": 64
+    },
+    "shortlist": 121,
+    "maxScoreError": 1.1102230246251565e-16,
+    "weightComparisons": [
+      {
+        "weights": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "spearman": 0.9454556363909098,
+        "top10Overlap": 9
+      },
+      {
+        "weights": [
+          0.5,
+          0.2,
+          0.3
+        ],
+        "spearman": 0.939761494037351,
+        "top10Overlap": 7
+      },
+      {
+        "weights": [
+          0.4,
+          0.35,
+          0.25
+        ],
+        "spearman": 0.988185704642616,
+        "top10Overlap": 10
+      },
+      {
+        "weights": [
+          0.4,
+          0.3,
+          0.3
+        ],
+        "spearman": 0.9912982824570614,
+        "top10Overlap": 10
+      }
+    ],
+    "selected": [
+      {
+        "receptor": "αvβ3 integrin / ITGAV–ITGB3",
+        "protein": "MFGE8",
+        "shortlistRank": 1,
+        "score": 0.8027960636063587,
+        "coverage": "2/3",
+        "feasibility": "High",
+        "ranks": [
+          1,
+          2,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "receptor": "αvβ3 integrin / ITGAV–ITGB3",
+        "protein": "THBS1",
+        "shortlistRank": 2,
+        "score": 0.7566970181272088,
+        "coverage": "2/3",
+        "feasibility": "High",
+        "ranks": [
+          2,
+          6,
+          5,
+          5,
+          3
+        ]
+      },
+      {
+        "receptor": "αvβ3 integrin / ITGAV–ITGB3",
+        "protein": "ITGB1",
+        "shortlistRank": 3,
+        "score": 0.7522631876616138,
+        "coverage": "2/3",
+        "feasibility": "High",
+        "ranks": [
+          3,
+          7,
+          7,
+          7,
+          4
+        ]
+      },
+      {
+        "receptor": "αvβ3 integrin / ITGAV–ITGB3",
+        "protein": "ITGA6",
+        "shortlistRank": 4,
+        "score": 0.7386095789868335,
+        "coverage": "2/3",
+        "feasibility": "High",
+        "ranks": [
+          4,
+          5,
+          6,
+          6,
+          5
+        ]
+      },
+      {
+        "receptor": "ROR1",
+        "protein": "MFGE8",
+        "shortlistRank": 5,
+        "score": 0.7159589459166001,
+        "coverage": "2/3",
+        "feasibility": "High",
+        "ranks": [
+          6,
+          4,
+          8,
+          3,
+          7
+        ]
+      },
+      {
+        "receptor": "CD44",
+        "protein": "THBS1",
+        "shortlistRank": 13,
+        "score": 0.5631352509353876,
+        "coverage": "3/3",
+        "feasibility": "High",
+        "ranks": [
+          19,
+          17,
+          22,
+          19,
+          21
+        ]
+      },
+      {
+        "receptor": "EpCAM / EPCAM",
+        "protein": "CD44",
+        "shortlistRank": 15,
+        "score": 0.5575794991333538,
+        "coverage": "3/3",
+        "feasibility": "High",
+        "ranks": [
+          21,
+          29,
+          25,
+          24,
+          23
+        ]
+      },
+      {
+        "receptor": "CD44",
+        "protein": "LGALS3BP",
+        "shortlistRank": 19,
+        "score": 0.522570666156454,
+        "coverage": "3/3",
+        "feasibility": "High",
+        "ranks": [
+          26,
+          15,
+          15,
+          20,
+          19
+        ]
+      }
+    ],
+    "benchmarkStatus": "No independent assay labels or negative reference set"
+  },
+  "tag": [
+    {
+      "threshold": 0.0,
+      "biomass": 0.0,
+      "glycogen": 0.0,
+      "reference": 0.09934611125823917,
+      "released": 0.09934611125823917,
+      "gainPercent": 0.0
+    },
+    {
+      "threshold": 20.0,
+      "biomass": 0.020328969841094672,
+      "glycogen": 0.004391428797970761,
+      "reference": 0.07947688900659267,
+      "released": 0.07987211759841004,
+      "gainPercent": 0.49728744639789824
+    },
+    {
+      "threshold": 40.0,
+      "biomass": 0.040657939682189344,
+      "glycogen": 0.008782857595941522,
+      "reference": 0.059607666754945166,
+      "released": 0.06039812393858008,
+      "gainPercent": 1.3260998570613136
+    },
+    {
+      "threshold": 60.0,
+      "biomass": 0.06098690952328401,
+      "glycogen": 0.01317428639391228,
+      "reference": 0.039738444503297936,
+      "released": 0.04092413027875017,
+      "gainPercent": 2.983724678387545
+    },
+    {
+      "threshold": 80.0,
+      "biomass": 0.08131587936437869,
+      "glycogen": 0.017565715191883043,
+      "reference": 0.019869222251650897,
+      "released": 0.021450136618920267,
+      "gainPercent": 7.956599142364595
+    },
+    {
+      "threshold": 90.0,
+      "biomass": 0.09148036428492602,
+      "glycogen": 0.01976142959086842,
+      "reference": 0.009934611125827244,
+      "released": 0.0117131397890053,
+      "gainPercent": 17.90234807031723
+    },
+    {
+      "threshold": 95.0,
+      "biomass": 0.09656260674519969,
+      "glycogen": 0.02085928679036111,
+      "reference": 0.004967305562915266,
+      "released": 0.006844641374047819,
+      "gainPercent": 37.79384592621604
+    },
+    {
+      "threshold": 99.0,
+      "biomass": 0.10062840071341862,
+      "glycogen": 0.021737572549955262,
+      "reference": 0.0009934611125860388,
+      "released": 0.002949842642081995,
+      "gainPercent": 196.92582877284224
+    },
+    {
+      "threshold": 100.0,
+      "biomass": 0.10164484920547336,
+      "glycogen": 0.0219571439898538,
+      "reference": 5.400921138410339e-15,
+      "released": 0.001976142959090352,
+      "gainPercent": null
+    }
+  ],
+  "ecoli": {
+    "sweep": [
+      {
+        "threshold": 20.0,
+        "growth": 0.163999,
+        "flux": 0.0865263
+      },
+      {
+        "threshold": 40.0,
+        "growth": 0.327998,
+        "flux": 0.06717518
+      },
+      {
+        "threshold": 60.0,
+        "growth": 0.491997,
+        "flux": 0.04782406
+      },
+      {
+        "threshold": 70.0,
+        "growth": 0.573996,
+        "flux": 0.03707689
+      },
+      {
+        "threshold": 80.0,
+        "growth": 0.655996,
+        "flux": 0.02475298
+      },
+      {
+        "threshold": 90.0,
+        "growth": 0.737995,
+        "flux": 0.01242907
+      },
+      {
+        "threshold": 95.0,
+        "growth": 0.778995,
+        "flux": 0.006232223
+      },
+      {
+        "threshold": 100.0,
+        "growth": 0.819995,
+        "flux": 1.523507e-16
+      }
+    ],
+    "endpoints": {
+      "reference": 0.024752978124691682,
+      "fixed": 0.050104900417283646,
+      "adaptive": 0.029960116004179933
+    }
+  },
+  "structure": {
+    "file": "13test4_7fd83_13test4_7fd83_unrelaxed_rank_001_alphafold2_multimer_v3_model_1_seed_000.pdb",
+    "method": "ColabFold (AlphaFold2-Multimer)",
+    "residues": {
+      "A": 248,
+      "B": 1152
+    }
+  }
+}

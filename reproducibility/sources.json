@@ -1,0 +1,58 @@
+{
+  "sources": {
+    "tnbc": {
+      "repository": "https://github.com/AbhignanVajjala/TNBC-PROJECT",
+      "commit": "d7ac62df14a6426524807a9396e8de1211790a1d"
+    },
+    "metaforge": {
+      "repository": "https://github.com/AbhignanVajjala/Metaforge",
+      "commit": "f47186650e187899949e373216795cc90b54dd68"
+    },
+    "agent-skills": {
+      "repository": "https://github.com/AbhignanVajjala/Bioinformatics-agent-skills",
+      "commit": "98a9456132fb474996f4c5d566065925ed79551b"
+    }
+  },
+  "inputs": {
+    "exo-scores.csv": {
+      "source": "tnbc",
+      "path": "outputs/final_score_calculation.csv",
+      "sha256": "4363bfb94d873c3bc5535a04ab8be35a4e5d6690b78287a3a8b104d07c04c054"
+    },
+    "exo-shortlist.csv": {
+      "source": "tnbc",
+      "path": "outputs/final_preferred_shortlist.csv",
+      "sha256": "ea65f2489e0ec24ced93ad8f673267b43b51eea1e0610545f87d5e6a20d0d071"
+    },
+    "exo-afs.csv": {
+      "source": "tnbc",
+      "path": "outputs/afs_provisional.csv",
+      "sha256": "6efbe4b8b252fe662f98abdfafc26343b3ef36ab0c7c4e79b53c18451e87ffe9"
+    },
+    "exo-sensitivity.csv": {
+      "source": "tnbc",
+      "path": "outputs/scoring_sensitivity.csv",
+      "sha256": "14335ef3567174baa4c8df4b108cc1849bdf3fe066e3f82dd266b27815cf71a3"
+    },
+    "exo-structure-index.csv": {
+      "source": "tnbc",
+      "path": "backend/data/processed/structure_index.csv",
+      "sha256": "ec96e68d8ccb4b794cf5998527ebe5eb58e08c5b24a3c86c884c61862493510f"
+    },
+    "exo-cd44-thbs1.pdb": {
+      "source": "tnbc",
+      "path": "backend/data/structures/13test4_7fd83_13test4_7fd83_unrelaxed_rank_001_alphafold2_multimer_v3_model_1_seed_000.pdb",
+      "sha256": "f5936a22a7164ab871fe77e96726f8b92627032616abbbb823a1e8fd9fce0b3d"
+    },
+    "cyanobacteria-output.txt": {
+      "source": "metaforge",
+      "path": "public/research/cyanobacteria-output.txt",
+      "sha256": "ff6d7fff9fae22873fcb2b596c4e4ae7a5231a708efcb504d33634b70b01c6a1"
+    },
+    "ecoli-output.txt": {
+      "source": "metaforge",
+      "path": "public/research/ecoli-output.txt",
+      "sha256": "a24ed184b813ccaf935be8b42a57012cf0e480defba6d93bca85896c163aea1d"
+    }
+  }
+}

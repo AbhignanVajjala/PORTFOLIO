@@ -306,6 +306,23 @@ body {
   padding: 28px 0;
   border-color: #31515d;
 }
+.timeline-featured .timeline-dot {
+  background: #8de8dc;
+}
+.timeline-compact {
+  min-height: 125px;
+  padding-block: 20px;
+}
+.timeline-compact .timeline-body h3 {
+  font-size: 18px;
+}
+.timeline-compact .timeline-body p {
+  font-size: 15px;
+}
+.timeline-body .acceptance-type {
+  color: #d4c6f5;
+  font-size: 14px;
+}
 .timeline-dot {
   width: 11px;
   height: 11px;
@@ -347,6 +364,10 @@ body {
   gap: 18px;
   border-color: #31515d;
 }
+.toolkit-row {
+  grid-template-columns: minmax(170px, 0.3fr) minmax(0, 1fr);
+  padding-block: 20px;
+}
 .toolkit-row h3 {
   font-size: 18px;
 }
@@ -354,31 +375,6 @@ body {
   color: #b4c9cd;
   font-size: 16px;
   line-height: 1.6;
-}
-.rosalind-card {
-  background:
-    radial-gradient(circle at top right, #2a676862, transparent 55%), #102b38;
-  border-color: #39616a;
-  border-radius: 14px;
-  min-height: 390px;
-}
-.rosalind-top {
-  color: #a9e5e0;
-  font-size: 12px;
-  gap: 12px;
-}
-.rosalind-card h3 {
-  font-size: 35px;
-  max-width: 400px;
-  margin-top: 67px;
-}
-.rosalind-card p {
-  color: #b9ced1;
-  font-size: 17px;
-}
-.rosalind-card a {
-  color: #d3eeeb;
-  font-size: 15px;
 }
 
 .contact-section {
@@ -515,9 +511,6 @@ body {
     right: -8%;
     width: 80%;
   }
-  .toolkit-layout {
-    gap: 34px;
-  }
 }
 @media (max-width: 850px) {
   .wrap {
@@ -563,6 +556,9 @@ body {
   }
 }
 @media (max-width: 600px) {
+  .toolkit-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .wrap {
     width: calc(100% - 36px);
   }
@@ -672,15 +668,6 @@ body {
   }
   .toolkit-row p {
     font-size: 15px;
-  }
-  .rosalind-top {
-    font-size: 10px;
-  }
-  .rosalind-card h3 {
-    font-size: 30px;
-  }
-  .rosalind-card p {
-    font-size: 16px;
   }
   .contact-content h2 {
     font-size: 58px;
@@ -826,48 +813,11 @@ body {
   background: linear-gradient(90deg, #2b67674a, #143b4540 65%, transparent);
   box-shadow: inset 3px 0 #75d7d0;
 }
-.toolkit-row::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  justify-self: center;
-  grid-column: -2;
-  grid-row: 1;
-  border: 1px solid #75c8c7;
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 2px #102f3a,
-    0 0 0 3px #4a9d9c26;
-  opacity: 0.65;
-  transition:
-    opacity 0.28s ease,
-    box-shadow 0.28s ease;
-}
 .toolkit-row:hover::after {
   opacity: 1;
   box-shadow:
     inset 0 0 0 2px #102f3a,
     0 0 0 5px #4a9d9c33;
-}
-.rosalind-card {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 89% 8%, #24696888, transparent 38%), #102b38;
-}
-.rosalind-card > :not(.rosalind-motif) {
-  position: relative;
-  z-index: 1;
-}
-.rosalind-motif {
-  position: absolute;
-  width: 155px;
-  top: -15px;
-  right: 4px;
-  color: #89ddd5;
-  opacity: 0.22;
-  transform: rotate(18deg);
-  pointer-events: none;
 }
 .timeline-item {
   transition:
@@ -936,22 +886,16 @@ body {
   .project-card:focus-within .project-graphic svg {
     transform: scale(1.025);
   }
-  .rosalind-motif {
-    width: 130px;
-    opacity: 0.15;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .project-card,
   .project-graphic,
   .project-graphic svg,
   .toolkit-row,
-  .toolkit-row::after,
   .timeline-item {
     transition: none;
   }
 }
-
 
 /* Centered hero and contact */
 /* The helix spans the hero as an atmospheric background, never as a right column. */

@@ -10,7 +10,6 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Atom,
   BookOpen,
   Braces,
   ChartNoAxesCombined,
@@ -22,7 +21,6 @@ import {
   Linkedin,
   Menu,
   Network,
-  Orbit,
   X,
 } from "lucide-react";
 import {
@@ -43,6 +41,7 @@ import {
 } from "./Visuals";
 import { HelixScene } from "./HelixScene";
 import { siteMetadata } from "./seo";
+import { RankingEvidence, ResearchFigure } from "./ResearchEvidence";
 
 const externalProps = { target: "_blank", rel: "noopener noreferrer" } as const;
 
@@ -90,8 +89,12 @@ function Header() {
         Skip to content
       </a>
       <div className="header-inner wrap">
-        <Link to="/#home" className="brand" aria-label="Abhignan Vajjala, home">
-          <span className="brand-mark">AV</span>
+        <Link
+          to="/#home"
+          className="brand"
+          aria-label="AV Computational Biology & Research, Abhignan Vajjala home"
+        >
+          <span className="brand-mark">AV</span>{" "}
           <span className="brand-divider" />
           <span className="brand-descriptor">
             COMPUTATIONAL BIOLOGY &amp; RESEARCH
@@ -198,13 +201,15 @@ function ProjectLinks({
           Explore Project <ArrowUpRight size={16} />
         </Link>
       )}
-      <a
-        className={`button ${detail ? "button-primary" : "button-outline"}`}
-        href={project.demoUrl}
-        {...externalProps}
-      >
-        Interactive Demo <ExternalLink size={15} />
-      </a>
+      {project.demoUrl && (
+        <a
+          className={`button ${detail ? "button-primary" : "button-outline"}`}
+          href={project.demoUrl}
+          {...externalProps}
+        >
+          Interactive Demo <ExternalLink size={15} />
+        </a>
+      )}
       <a className="text-link" href={project.sourceUrl} {...externalProps}>
         View Source <ArrowUpRight size={15} />
       </a>
@@ -269,16 +274,7 @@ function Hero() {
 }
 
 function About() {
-  const icons = [
-    Atom,
-    Network,
-    Dna,
-    CircleDot,
-    ChartNoAxesCombined,
-    Orbit,
-    CircleDot,
-    Braces,
-  ];
+  const icons = [Dna, Network, ChartNoAxesCombined, CircleDot, Braces];
   return (
     <section className="section about-section" id="about" tabIndex={-1}>
       <div className="wrap about-layout">
@@ -293,11 +289,26 @@ function About() {
               VJIET) in Hyderabad, India.
             </p>
             <p>
-              I’m interested in how models can guide the next experiment, from
-              choosing which protein interactions to examine to understanding
-              how metabolic constraints shape product flux. I build interactive
-              tools to make those comparisons easier to inspect.
+              My projects start with biological questions about receptor
+              recognition in cancer and the metabolic cost of making a product.
+              I’m interested in turning those questions into models whose
+              inputs, comparisons and limits can be inspected.
             </p>
+            <p>
+              Alongside structural bioinformatics and metabolic modeling, I’m
+              developing research software that checks data and study designs. I
+              would like to explore computational drug discovery and methods for
+              evaluating scientific AI tools.
+            </p>
+            <div className="current-work">
+              <h3>Currently working on</h3>
+              <p>
+                <Link to="/projects/bioinformatics-agent-skills">
+                  Bioinformatics Agent Skills
+                </Link>{" "}
+                and the evaluation of its scientific checks and agent workflows.
+              </p>
+            </div>
           </Reveal>
         </div>
         <Reveal className="interests-panel">
@@ -324,12 +335,16 @@ function About() {
 function ConferenceEntry({ entry }: { entry: Conference }) {
   const project = projects.find((item) => item.id === entry.projectId);
   return (
-    <Reveal className="timeline-item">
+    <Reveal
+      className={`timeline-item ${entry.featured ? "timeline-featured" : "timeline-compact"}`}
+    >
       <div className="timeline-axis">
         <span className="timeline-dot" />
         <span className="timeline-line" />
       </div>
-      <div className="timeline-date">{entry.date}</div>
+      <time className="timeline-date" dateTime={entry.startDate}>
+        {entry.date}
+      </time>
       <div className="timeline-body">
         <div className="timeline-title-row">
           <h3>{entry.title}</h3>
@@ -340,6 +355,11 @@ function ConferenceEntry({ entry }: { entry: Conference }) {
           </span>
         </div>
         <p className="timeline-venue">{entry.venue}</p>
+        {entry.presentationType && (
+          <p className="acceptance-type">
+            {entry.presentationType} abstract accepted
+          </p>
+        )}
         <p>{entry.description}</p>
         {entry.details && <p>{entry.details}</p>}
         <div className="timeline-actions">
@@ -367,9 +387,9 @@ function Research() {
         <SectionHeading
           eyebrow="RESEARCH JOURNEY"
           title="Conversations beyond the lab."
-          intro="Conference participation, student research presentations, and abstract acceptance."
+          intro="Research abstract acceptances and presentations, alongside conference participation."
         />
-        <div className="timeline">
+        <div className="timeline" aria-label="Research and conference timeline">
           {conferences.map((entry) => (
             <ConferenceEntry entry={entry} key={entry.title} />
           ))}
@@ -388,54 +408,34 @@ function Toolkit() {
           eyebrow="TOOLS & METHODS"
           title="A practical scientific toolkit."
         />
-        <div className="toolkit-layout">
-          <div className="toolkit-list">
-            {toolkit.map((item) => (
-              <Reveal className="toolkit-row" key={item.category}>
-                <h3>{item.category}</h3>
+        <div className="toolkit-list">
+          {toolkit.map((item) => (
+            <Reveal className="toolkit-row" key={item.category}>
+              <h3>{item.category}</h3>
+              <div>
                 <p>{item.items}</p>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="rosalind-card">
-            <svg
-              className="rosalind-motif"
-              viewBox="0 0 150 130"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M25 15c88 25 9 70 100 100M125 15C37 40 116 90 25 115"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M53 25h44M66 42h18M59 60h32M67 78h18M52 96h46"
-                stroke="currentColor"
-                strokeWidth="1"
-                opacity=".6"
-              />
-              <circle cx="53" cy="25" r="3" fill="currentColor" />
-              <circle cx="98" cy="96" r="3" fill="currentColor" />
-            </svg>
-            <div className="rosalind-top">
-              <BookOpen size={25} strokeWidth={1.4} />
-              <span>PRACTICE / BIOINFORMATICS</span>
-            </div>
-            <h3>
-              Problems as practice.<span> Solutions as code.</span>
-            </h3>
-            <p>
-              Working through Rosalind problems to build practical algorithmic
-              skills in bioinformatics.
-            </p>
-            <a href={person.rosalind} {...externalProps}>
-              Rosalind profile <ArrowUpRight size={15} />
-            </a>
-            <a href={person.rosalindSolutions} {...externalProps}>
-              Browse solutions <ArrowUpRight size={15} />
-            </a>
-          </Reveal>
+                <a
+                  className="toolkit-evidence"
+                  href={item.url}
+                  {...externalProps}
+                >
+                  {item.evidence} <ArrowUpRight size={14} />
+                </a>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="rosalind-practice">
+          <p>
+            <BookOpen size={18} aria-hidden="true" /> Algorithm practice through
+            Rosalind
+          </p>
+          <a href={person.rosalind} {...externalProps}>
+            Rosalind profile <ArrowUpRight size={15} />
+          </a>
+          <a href={person.rosalindSolutions} {...externalProps}>
+            Browse solutions <ArrowUpRight size={15} />
+          </a>
         </div>
       </div>
     </section>
@@ -459,8 +459,8 @@ function Contact() {
             Let's <em>connect.</em>
           </h2>
           <p>
-            Get in touch about computational biology projects, research
-            opportunities, or scientific software.
+            I’m open to research internships, computational biology
+            collaborations, and discussions about scientific software.
           </p>
           <a className="contact-email" href={`mailto:${person.email}`}>
             {person.email}
@@ -493,13 +493,23 @@ export function Home() {
           <SectionHeading
             eyebrow="SELECTED WORK"
             title="Research in motion."
-            intro="Explore two modeling projects, from the research question to the results and their limits."
+            intro="Two computational investigations, with the underlying results and the conditions that shape them."
           />
           <div className="project-list">
-            {projects.map((p) => (
+            {projects.slice(0, 2).map((p) => (
               <ProjectCard key={p.id} project={p} />
             ))}
           </div>
+          <article className="software-project">
+            <div>
+              <span className="eyebrow">RESEARCH SOFTWARE</span>
+              <h3>{projects[2].name}</h3>
+              <p>{projects[2].short}</p>
+            </div>
+            <Link className="text-link" to={`/projects/${projects[2].id}`}>
+              Explore software <ArrowUpRight size={16} />
+            </Link>
+          </article>
         </div>
       </section>
       <About />
@@ -514,17 +524,21 @@ const detailNavigation = [
   ["question", "Research question"],
   ["methods", "Methods"],
   ["findings", "Findings"],
+  ["evidence", "Evidence and reproducibility"],
   ["limitations", "Limitations"],
   ["implementation", "Research software"],
+  ["contribution", "My contribution"],
+  ["next-steps", "Next steps"],
 ];
 
 function ProjectDetail({ project }: { project: Project }) {
-  const nextProject = projects.find((item) => item.id !== project.id)!;
+  const nextProject =
+    projects[(projects.indexOf(project) + 1) % projects.length];
   return (
     <main
       id="main-content"
       tabIndex={-1}
-      className={`detail-page detail-${project.accent}`}
+      className={`detail-page detail-${project.accent} ${project.demoUrl ? "" : "detail-software"}`}
     >
       <div className="detail-hero">
         <div className="wrap">
@@ -545,7 +559,23 @@ function ProjectDetail({ project }: { project: Project }) {
               <ProjectLinks project={project} detail />
             </div>
             <div className="detail-visual">
-              {project.id === "exo-target" ? <ProteinVisual /> : <FluxVisual />}
+              {project.heroFigure ? (
+                <ResearchFigure figure={project.heroFigure} headingLevel={2} />
+              ) : project.demoUrl ? (
+                <FluxVisual />
+              ) : (
+                <div className="software-summary">
+                  <Braces size={34} aria-hidden="true" />
+                  <h2>Checks before claims.</h2>
+                  <p>
+                    Sample identity, study design and numerical feasibility.
+                  </p>
+                  <p>
+                    Implemented with synthetic fixtures and explicit evidence
+                    boundaries.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -563,6 +593,7 @@ function ProjectDetail({ project }: { project: Project }) {
           <section id="question" tabIndex={-1}>
             <h2>Research question</h2>
             <p className="big-statement">{project.question}</p>
+            <p>{project.context}</p>
           </section>
           <section id="methods" tabIndex={-1}>
             <h2>Methods</h2>
@@ -578,7 +609,7 @@ function ProjectDetail({ project }: { project: Project }) {
           </section>
           <section id="findings" tabIndex={-1}>
             <h2>Findings</h2>
-            {project.findings.map(({ title, text, values }) => (
+            {project.findings.map(({ title, text, values, figure }) => (
               <article className="finding" key={title}>
                 <h3>{title}</h3>
                 <p>{text}</p>
@@ -592,8 +623,22 @@ function ProjectDetail({ project }: { project: Project }) {
                     ))}
                   </dl>
                 )}
+                {figure && <ResearchFigure figure={figure} />}
               </article>
             ))}
+          </section>
+          <section id="evidence" tabIndex={-1}>
+            <h2>Evidence and reproducibility</h2>
+            <h3>{project.evidence.title}</h3>
+            <p>{project.evidence.text}</p>
+            <a
+              className="text-link"
+              href={project.evidence.sourceUrl}
+              {...externalProps}
+            >
+              {project.evidence.sourceLabel} <ArrowUpRight size={15} />
+            </a>
+            {project.id === "exo-target" && <RankingEvidence />}
           </section>
           <section id="limitations" tabIndex={-1}>
             <h2>Limitations</h2>
@@ -609,6 +654,21 @@ function ProjectDetail({ project }: { project: Project }) {
           <section id="implementation" tabIndex={-1}>
             <h2>Research software</h2>
             <p>{project.implementation}</p>
+          </section>
+          <section id="contribution" tabIndex={-1}>
+            <h2>My contribution</h2>
+            <p>{project.contribution}</p>
+          </section>
+          <section id="next-steps" tabIndex={-1}>
+            <h2>Next steps</h2>
+            <ul className="detail-list">
+              {project.nextSteps.map((step) => (
+                <li key={step}>
+                  <ArrowRight size={17} aria-hidden="true" />
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </div>

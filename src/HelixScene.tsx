@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { useReducedMotion } from "motion/react";
 
 type Point = { x: number; y: number; depth: number };
 
@@ -202,7 +201,6 @@ function CircuitField() {
 
 export function HelixScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -210,11 +208,17 @@ export function HelixScene() {
     if (!canvas || !ctx) return;
 
     const mobileLayout = window.matchMedia("(max-width: 700px)");
+    const motionPreference = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
     let width = 0;
     let height = 0;
     let frame = 0;
     let visible = true;
-    let current = reducedMotion ? 0.55 : phaseForScroll(window.scrollY);
+    let pixelRatio = 0;
+    let current = motionPreference.matches
+      ? 0.55
+      : phaseForScroll(window.scrollY);
     let target = current;
 
     const paint = () => {
@@ -231,48 +235,62 @@ export function HelixScene() {
       if (current !== target) frame = requestAnimationFrame(tick);
     };
     const onScroll = () => {
-      if (!visible) return;
+      if (!visible || motionPreference.matches) return;
       target = phaseForScroll(window.scrollY);
-      if (!frame) frame = requestAnimationFrame(tick);
+      if (target !== current && !frame) frame = requestAnimationFrame(tick);
     };
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
       const ratio = Math.min(
         window.devicePixelRatio || 1,
         mobileLayout.matches ? 1.3 : 2,
       );
+      if (
+        width === rect.width &&
+        height === rect.height &&
+        pixelRatio === ratio
+      )
+        return;
+      width = rect.width;
+      height = rect.height;
+      pixelRatio = ratio;
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      paint();
+    };
+    const onMotionChange = () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      current = motionPreference.matches
+        ? 0.55
+        : phaseForScroll(window.scrollY);
+      target = current;
       paint();
     };
 
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
     resize();
-    const visibility = reducedMotion
-      ? undefined
-      : new IntersectionObserver(([entry]) => {
-          visible = entry.isIntersecting;
-          if (visible) onScroll();
-          else if (frame) {
-            cancelAnimationFrame(frame);
-            frame = 0;
-          }
-        });
-    if (visibility) {
-      visibility.observe(canvas);
-      window.addEventListener("scroll", onScroll, { passive: true });
-    }
+    const visibility = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) onScroll();
+      else if (frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    });
+    visibility.observe(canvas);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    motionPreference.addEventListener("change", onMotionChange);
     return () => {
       observer.disconnect();
-      visibility?.disconnect();
+      visibility.disconnect();
       window.removeEventListener("scroll", onScroll);
+      motionPreference.removeEventListener("change", onMotionChange);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [reducedMotion]);
+  }, []);
 
   return (
     <div

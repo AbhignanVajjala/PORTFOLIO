@@ -10,3 +10,5 @@ tsconfig.tsbuildinfo
 .DS_Store
 .tmp/
 tmp/
+__pycache__/
+.venv/
